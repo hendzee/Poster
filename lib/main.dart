@@ -11,6 +11,7 @@ class Poster extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFFFFFF)),
       initialRoute: '/home',
       routes: {
         '/': (context) => SplashScreen(),

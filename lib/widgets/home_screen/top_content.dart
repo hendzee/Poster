@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class TopContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 35.0,
+        horizontal: 25.0,
         vertical: 20.0
       ),
       width: double.infinity,
@@ -36,7 +37,7 @@ class TopContent extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: Icon(
-                        Icons.music_note,
+                        EvaIcons.headphonesOutline,
                         color: Colors.white,
                       ),
                     ),
@@ -54,7 +55,7 @@ class TopContent extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: Icon(
-                        Icons.people,
+                        EvaIcons.peopleOutline,
                         color: Colors.white,
                       ),
                     ),
@@ -72,7 +73,7 @@ class TopContent extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: Icon(
-                        Icons.filter_vintage,
+                        EvaIcons.sunOutline,
                         color: Colors.white,
                       ),
                     ),
@@ -90,11 +91,11 @@ class TopContent extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: Icon(
-                        Icons.person,
+                        EvaIcons.moonOutline,
                         color: Colors.white,
                       ),
                     ),
-                    Text('Seminar',
+                    Text('Religion',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold
