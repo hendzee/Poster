@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'home_screen.dart';
+import 'explore_screen.dart';
+import 'package:flutter/services.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -11,14 +13,19 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   List<Widget> _screenOptions = [
       HomeScreen(),
-      HomeScreen(),
+      ExplreScreen(),
       HomeScreen(),
       HomeScreen(),
       HomeScreen(),
   ];
-  
+
   // On item bottom navigation tapped
   void _onItemTapped(int index) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Color(0xFF40407A),
+      statusBarIconBrightness: Brightness.light
+    ));
+
     setState(() {
       _selectedIndex = index;
     });
