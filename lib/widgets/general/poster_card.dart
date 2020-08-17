@@ -11,8 +11,7 @@ class PosterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0, bottom: 25.0),
-      width: double.infinity,
+      width: 310,
       height: 220,
       child: Stack(
         fit: StackFit.expand,
@@ -30,7 +29,7 @@ class PosterCard extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.black.withOpacity(0.3),
                               spreadRadius: 5.0,
                               blurRadius: 7.0,
                               offset: Offset(0, 3)
@@ -42,7 +41,7 @@ class PosterCard extends StatelessWidget {
                         Positioned(
                           right: 0,
                           child: Container(
-                            padding: EdgeInsets.all(5.0),
+                            padding: EdgeInsets.all(5),
                             width: 160,
                             height: 180,
                             child: Column(
@@ -89,7 +88,7 @@ class PosterCard extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 10.0, bottom: 5.0),
+                                  padding: EdgeInsets.only(top: 0, bottom: 5.0),
                                   child: RichText(
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 3,

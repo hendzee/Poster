@@ -13,7 +13,7 @@ class TopContent extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color(0XFF40407A),
           borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(70.0),
+            bottomRight: Radius.circular(50.0),
           )
       ),
       child: Column(

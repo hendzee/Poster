@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poster/models/poster_card_model.dart'; // Poster card model
 import '../widgets/general/poster_card.dart'; // Poster card widget
 import '../widgets/home_screen/top_content.dart'; // Substance of home screen
-import '../widgets/home_screen/trending_title_content.dart'; // Sunstance of home screen
+import '../widgets/home_screen/trending_title_content.dart'; // Substance of home screen
+import '../widgets/home_screen/recomended_list.dart'; // Substance of home screen
+import '../widgets/home_screen/coming_soon_list.dart'; // Substance of home screen
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -35,29 +36,12 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               TopContent(),
               TrendingTitleContent(),
-              PosterCard(posterCardModel: this.posterCardModel1,),
-              Container(
-                padding: EdgeInsets.all(25.0),
-                decoration: BoxDecoration(
-                  color: Colors.redAccent,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                  )
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Text('Recomended'),
-                      Text('This is item 2'),
-                      Text('This is item 3'),
-                      Text('This is item 4'),
-                      Text('This is item 5'),
-                      Text('This is item 6'),
-                    ],
-                  ),
-                ),
-              )
+              Padding(
+                padding: const EdgeInsets.only(top: 0, right: 25, bottom: 25, left: 25),
+                child: PosterCard(posterCardModel: this.posterCardModel1,),
+              ),
+              RecomendedList(),
+              ComingSoonList()
             ],
           ),
         )
