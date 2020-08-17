@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './screens/splash_screen.dart';
 import './screens/home_screen.dart';
+import './screens/main_screen.dart';
 
 void main() {
   runApp(Poster());
@@ -12,10 +13,10 @@ class Poster extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFFFFFFF)),
-      initialRoute: '/home',
+      initialRoute: '/main',
       routes: {
         '/': (context) => SplashScreen(),
-        '/home': (context) => HomeScreen()
+        '/main': (context) => MainScreen(),
       },
     );
   }

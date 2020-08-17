@@ -28,8 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       statusBarColor: const Color(0XFF40407A),
     ));
 
-    return Scaffold(
-      body: SafeArea(
+    return SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         )
-      ),
     );
   }
 }
