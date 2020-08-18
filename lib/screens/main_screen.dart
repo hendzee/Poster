@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/services.dart';
 import 'home_screen.dart';
 import 'explore_screen.dart';
-import 'package:flutter/services.dart';
+import 'add_item_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -14,25 +15,29 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _screenOptions = [
       HomeScreen(),
       ExplreScreen(),
-      HomeScreen(),
+      AddItemScreen(),
       HomeScreen(),
       HomeScreen(),
   ];
 
   // On item bottom navigation tapped
-  void _onItemTapped(int index) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF40407A),
-      statusBarIconBrightness: Brightness.light
-    ));
-
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onItemTapped(int index, BuildContext context) {
+    if (index == 2) {
+      Navigator.pushNamed(context, '/add_item');
+    }else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Color(0xFF40407A),
+        statusBarIconBrightness: Brightness.light
+    ));
+
     return Scaffold(
       body: _screenOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -58,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(_selectedIndex == 4 ? EvaIcons.person : EvaIcons.personOutline)
           ),
         ],
-        onTap: _onItemTapped,
+        onTap: (index) => _onItemTapped(index, context),
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: _selectedIndex,

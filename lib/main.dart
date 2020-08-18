@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:poster/screens/add_item_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/main_screen.dart';
+import './screens/add_item_screen.dart';
 
 void main() {
   runApp(Poster());
@@ -22,6 +24,7 @@ class Poster extends StatelessWidget {
       routes: {
         '/': (context) => SplashScreen(),
         '/main': (context) => MainScreen(),
+        '/add_item': (context) => AddItemScreen()
       },
     );
   }
