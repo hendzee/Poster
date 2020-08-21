@@ -12,6 +12,7 @@ class AddItemScreen extends StatefulWidget {
 
 class _AddItemScreenState extends State<AddItemScreen> {
   PriceType _priceType = PriceType.free;
+  bool _isPaid = false;
 
   // Navigate back
   void _toBack(BuildContext context) {
@@ -73,13 +74,6 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     prefixIcon: Icon(EvaIcons.mapOutline)
                   ),
                 ),
-                TextField(
-                  maxLines: 3,
-                  decoration: InputDecoration(
-                    labelText: 'Detail Location',
-                    prefixIcon: Icon(EvaIcons.mapOutline)
-                  ),
-                ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   margin: EdgeInsets.only(top: 25),
@@ -96,12 +90,19 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         onChanged: (selectedValue) {
                           setState(() {
                             _priceType = selectedValue;
+                            _isPaid = false;
                           });
                         },
                       ),
                       SizedBox(width: 3,),
                       GestureDetector(
-                          child: Text('Free Admission')
+                          child: Text('Free Admission'),
+                          onTap: (){
+                            this.setState(() {
+                              _priceType = PriceType.free;
+                              _isPaid = false;
+                            });
+                        },
                       ),
                       SizedBox(width: 15,),
                       Radio(
@@ -111,18 +112,28 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         onChanged: (selectedValue) {
                           setState(() {
                             _priceType = selectedValue;
+                            _isPaid = true;
                           });
                         },
                       ),
                       SizedBox(width: 3,),
-                      Text('Paid')
+                      GestureDetector(
+                          child: Text('Paid'),
+                          onTap: (){
+                            this.setState(() {
+                              _priceType = PriceType.paid;
+                              _isPaid = true;
+                            });
+                          },
+                      )
                     ],
                   ),
                 ),
                 TextField(
                   decoration: InputDecoration(
                     labelText: 'Price (If not Free)',
-                    prefixIcon: Icon(EvaIcons.creditCardOutline)
+                    prefixIcon: Icon(EvaIcons.creditCardOutline),
+                    enabled: _isPaid
                   ),
                 ),
                 TextField(
@@ -143,6 +154,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     prefixIcon: Icon(EvaIcons.cameraOutline)
                   ),
                 ),
+                SizedBox(height: 100,)
               ],
             ),
           ),
