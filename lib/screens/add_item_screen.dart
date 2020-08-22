@@ -13,6 +13,7 @@ class AddItemScreen extends StatefulWidget {
 class _AddItemScreenState extends State<AddItemScreen> {
   PriceType _priceType = PriceType.free;
   bool _isPaid = false;
+  bool _isDateCalled = false;
 
   // Navigate back
   void _toBack(BuildContext context) {
@@ -73,6 +74,15 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     labelText: 'Detail Location',
                     prefixIcon: Icon(EvaIcons.mapOutline)
                   ),
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Event Date',
+                    prefixIcon: Icon(EvaIcons.calendarOutline),
+                  ),
+                  onTap: (){
+                    this.setState(() { _isDateCalled = true; });
+                  },
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
