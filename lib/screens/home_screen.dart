@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // This is dummy data for this page
-  final PosterCardModel posterCardModel1 = new PosterCardModel(
+  final PosterCardModel _posterCardModel1 = new PosterCardModel(
     title: 'Harmony Concert 2020',
     date: '20 Sep, 2020',
     location: 'Embong anyar Street no 10, Malang',
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               TrendingTitleContent(),
               Padding(
                 padding: const EdgeInsets.only(top: 0, right: 25, bottom: 25, left: 25),
-                child: PosterCard(posterCardModel: this.posterCardModel1,),
+                child: PosterCard(posterCardModel: _posterCardModel1,),
               ),
               RecomendedList(),
               ComingSoonList()
