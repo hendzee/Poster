@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'home_screen.dart';
 import 'explore_screen.dart';
 import 'add_item_screen.dart';
+import 'notification_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
       HomeScreen(),
       ExplreScreen(),
       AddItemScreen(),
-      HomeScreen(),
+      NotificationScreen(),
       HomeScreen(),
   ];
 
