@@ -5,6 +5,7 @@ import 'home_screen.dart';
 import 'explore_screen.dart';
 import 'add_item_screen.dart';
 import 'notification_screen.dart';
+import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
       ExplreScreen(),
       AddItemScreen(),
       NotificationScreen(),
-      HomeScreen(),
+      ProfileScreen(),
   ];
 
   // On item bottom navigation tapped

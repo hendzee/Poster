@@ -47,6 +47,7 @@ flutter:
 #  assets:
   assets:
     - assets/dummy_images/poster1.png
+    - assets/dummy_images/user1.png
   fonts:
    - family: Pacifico
      fonts:
