@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:poster/models/poster_card_model.dart';
@@ -126,7 +125,7 @@ class PosterCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
               child: Image(
                 image: AssetImage(this.posterCardModel.posterImage),
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
             ),
           ),

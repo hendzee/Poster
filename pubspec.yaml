@@ -28,6 +28,7 @@ dependencies:
   date_range_picker: ^1.0.5
   intl: ^0.16.1
   image_picker: ^0.6.7+6
+  touchable_opacity: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +49,7 @@ flutter:
   assets:
     - assets/dummy_images/poster1.png
     - assets/dummy_images/user1.png
+    - assets/dummy_images/poster-large1.png
   fonts:
    - family: Pacifico
      fonts:
