@@ -5,6 +5,7 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 import '../modules/date_formater.dart'; // Date formater
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
+import '../widgets/general/bottom_button.dart';
 
 // Enum radio button price
 enum PriceType{ free, paid }
@@ -135,21 +136,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
         centerTitle: true,
         title: Text('New Event'),
       ),
-      bottomSheet: Container(
-        height: 50,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Color(0xFFD14081),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20)
-          )
-        ),
-        child: Center(
-          child: Text('PUBLISH',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
+      bottomSheet: BottomButton(title: 'PUBLISH',),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
