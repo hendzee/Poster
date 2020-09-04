@@ -4,6 +4,7 @@ import './screens/splash_screen.dart';
 import './screens/main_screen.dart';
 import './screens/add_item_screen.dart';
 import './screens/detail_item_screen.dart';
+import './screens/login_screen.dart';
 
 void main() {
   runApp(Poster());
@@ -21,12 +22,13 @@ class Poster extends StatelessWidget {
           elevation: 0.5,
         )
       ),
-      initialRoute: '/main',
+      initialRoute: '/login',
       routes: {
         '/': (context) => SplashScreen(),
         '/main': (context) => MainScreen(),
         '/add_item': (context) => AddItemScreen(),
-        '/detail_item': (context) => DetailItemScreen()
+        '/detail_item': (context) => DetailItemScreen(),
+        '/login': (context) => LoginScreen(),
       },
     );
   }
