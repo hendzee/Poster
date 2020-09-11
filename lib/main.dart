@@ -22,7 +22,7 @@ class Poster extends StatelessWidget {
           elevation: 0.5,
         )
       ),
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
         '/main': (context) => MainScreen(),

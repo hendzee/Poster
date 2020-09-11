@@ -1,10 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   /// Navigate to to main screen
-  void _toMain(BuildContext context) {
-    Navigator.pushNamed(context, '/home');
+  Future _toMain() async {
+    return Timer(Duration(seconds: 3), () {
+      Navigator.of(context).pushReplacementNamed('/login');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _toMain();
   }
 
   @override
@@ -12,25 +27,17 @@ class SplashScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: const Color(0XFF40407A),
     ));
-
-    return
-      Scaffold(
-        body: Container(
-          color: const Color(0xFF40407A),
-          child: Center(
-            child: GestureDetector(
-              onTap: () => _toMain(context),
-              child: Text(
-                'Poster',
-                style: TextStyle(
-                  fontSize: 48.0,
-                  color: Colors.white,
-                  fontFamily: 'Pacifico'
-                ),
-              ),
-            ),
+    return Scaffold(
+      body: Container(
+        color: const Color(0xFF40407A),
+        child: Center(
+          child: Text(
+            'Poster',
+            style: TextStyle(
+                fontSize: 48.0, color: Colors.white, fontFamily: 'Pacifico'),
           ),
         ),
-      );
+      ),
+    );
   }
 }

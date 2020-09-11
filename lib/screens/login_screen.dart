@@ -10,6 +10,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordSecure = true;
 
+  // Handle login
+  void _handleLogin(BuildContext context) {
+    Navigator.pushReplacementNamed(context, '/main');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,16 +88,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text('Forgot Password', style: TextStyle(color: Color(0xFFD14081)),),
                       ),
                       SizedBox(height: 50,),
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFD14081),
-                          borderRadius: BorderRadius.all(Radius.circular(10))
-                          
-                        ),
-                        child: Center(
-                          child: Text('Login', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+                      GestureDetector(
+                        onTap: () => _handleLogin(context),
+                        child: Container(
+                          width: double.infinity,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFD14081),
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          child: Center(
+                            child: Text('Login', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),),
+                          ),
                         ),
                       ),
                       Padding(
