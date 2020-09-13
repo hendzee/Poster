@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:poster/screens/add_item_screen.dart';
-import 'package:poster/screens/search_screen.dart';
 
 import './screens/add_item_screen.dart';
 import './screens/detail_item_screen.dart';
@@ -11,6 +10,7 @@ import './screens/splash_screen.dart';
 void main() {
   runApp(Poster());
 }
+
 class Poster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,6 @@ class Poster extends StatelessWidget {
         '/add_item': (context) => AddItemScreen(),
         '/detail_item': (context) => DetailItemScreen(),
         '/login': (context) => LoginScreen(),
-        '/search': (context) => SearchScreen(),
       },
     );
   }
