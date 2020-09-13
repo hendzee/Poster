@@ -9,6 +9,7 @@ class SearchBar extends SearchDelegate<String> {
     'Car Free Day',
     'Concert 2020',
     'Indonesian Flower Festival',
+    'Food Festival'
   ];
 
   // Recent Dummy Data
