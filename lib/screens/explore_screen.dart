@@ -41,7 +41,7 @@ class _ExplreScreenState extends State<ExplreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: new Container(),
+        leading: Container(),
         centerTitle: true,
         title: Text('Explore'),
         actions: <Widget>[

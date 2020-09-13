@@ -1,7 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
+import '../general/search_bar.dart';
+
 class TopContent extends StatelessWidget {
+  final dataDummy = ['Hendras', 'Virginia', 'Prawira'];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,14 +29,19 @@ class TopContent extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 36.0),
               ),
-              CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.white,
-                child: Center(
-                  child: Icon(
-                    EvaIcons.searchOutline,
-                    color: Color(0xFF40407A),
-                    size: 18,
+              GestureDetector(
+                onTap: () {
+                  showSearch(context: context, delegate: SearchBar());
+                },
+                child: CircleAvatar(
+                  radius: 18,
+                  backgroundColor: Colors.white,
+                  child: Center(
+                    child: Icon(
+                      EvaIcons.searchOutline,
+                      color: Color(0xFF40407A),
+                      size: 18,
+                    ),
                   ),
                 ),
               )
