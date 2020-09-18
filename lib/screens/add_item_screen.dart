@@ -90,10 +90,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
   // Handle image picker
   Future _handleImagePicker(ImagePickerType type) async {
     PickedFile pickedFile;
-    pickedFile = await _picker.getImage(source: ImageSource.gallery);
 
     if (type == ImagePickerType.camera) {
       pickedFile = await _picker.getImage(source: ImageSource.camera);
+    } else {
+      pickedFile = await _picker.getImage(source: ImageSource.gallery);
     }
 
     setState(() {
