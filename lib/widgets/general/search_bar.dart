@@ -2,8 +2,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'share_button.dart';
-import 'subscribe_button.dart';
+import '../searchbar_explore/share_button.dart';
+import '../searchbar_explore/subscribe_button.dart';
 
 class SearchBar extends SearchDelegate<String> {
   // List Dummy Data
@@ -106,7 +106,8 @@ class SearchBar extends SearchDelegate<String> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                               child: Container(
                                 width: 55,
                                 height: 75,
@@ -137,9 +138,16 @@ class SearchBar extends SearchDelegate<String> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 15,),
-                      Text('Paradise After Night', style: TextStyle(fontWeight: FontWeight.bold),),
-                      SizedBox(height: 5,),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        'Paradise After Night',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Text('20 Sep, 2020'),
                       Text('Matos, Malang'),
                     ],
