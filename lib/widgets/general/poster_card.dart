@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:poster/models/poster_card_model.dart';
+import 'package:flutter/material.dart';
+
+import '../../data/models/poster_card_model.dart';
 
 class PosterCard extends StatelessWidget {
   final PosterCardModel posterCardModel;
-  PosterCard({ this.posterCardModel });
+  PosterCard({this.posterCardModel});
 
   // Navigate to detail item
   void _toDetailItem(BuildContext context) {
@@ -39,10 +40,8 @@ class PosterCard extends StatelessWidget {
                                 color: Colors.black.withOpacity(0.3),
                                 spreadRadius: 5.0,
                                 blurRadius: 7.0,
-                                offset: Offset(0, 3)
-                            )
-                          ]
-                      ),
+                                offset: Offset(0, 3))
+                          ]),
                       child: Stack(
                         children: <Widget>[
                           Positioned(
@@ -55,9 +54,12 @@ class PosterCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(bottom: 10.0),
-                                    child: Text(this.posterCardModel.title,
-                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Text(
+                                      this.posterCardModel.title,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   Padding(
@@ -68,24 +70,32 @@ class PosterCard extends StatelessWidget {
                                           EvaIcons.calendarOutline,
                                           size: 13.0,
                                         ),
-                                        SizedBox(width: 5.0,),
-                                        Text(this.posterCardModel.date,
+                                        SizedBox(
+                                          width: 5.0,
+                                        ),
+                                        Text(
+                                          this.posterCardModel.date,
                                           style: TextStyle(fontSize: 12.0),
                                         )
                                       ],
                                     ),
-                                  ),Padding(
+                                  ),
+                                  Padding(
                                     padding: const EdgeInsets.only(bottom: 5.0),
                                     child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         Icon(
                                           EvaIcons.pinOutline,
                                           size: 13.0,
                                         ),
-                                        SizedBox(width: 5,),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
                                         Flexible(
-                                          child: Text(this.posterCardModel.location,
+                                          child: Text(
+                                            this.posterCardModel.location,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(fontSize: 12.0),
@@ -95,24 +105,27 @@ class PosterCard extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 0, bottom: 5.0),
-                                    child: RichText(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 3,
-                                      text: TextSpan(text: 'Desc: ',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                            fontSize: 12.0
-                                        ),
-                                        children: [
-                                          TextSpan(text: this.posterCardModel.description,
-                                            style: TextStyle(fontWeight: FontWeight.normal,)
-                                          )
-                                        ]
-                                      )
-                                    )
-                                  ),
+                                      padding:
+                                          EdgeInsets.only(top: 0, bottom: 5.0),
+                                      child: RichText(
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          text: TextSpan(
+                                              text: 'Desc: ',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                  fontSize: 12.0),
+                                              children: [
+                                                TextSpan(
+                                                    text: this
+                                                        .posterCardModel
+                                                        .description,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ))
+                                              ]))),
                                 ],
                               ),
                             ),

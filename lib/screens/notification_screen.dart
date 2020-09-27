@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:poster/models/notification_card_model.dart';
+
+import '../data/models/notification_card_model.dart';
 import '../widgets/notification_screen/notification_card.dart'; // Substance of notification screen
 
 class NotificationScreen extends StatefulWidget {
@@ -27,7 +28,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            NotificationCard(cardModel: this.dummyData,)
+            NotificationCard(
+              cardModel: this.dummyData,
+            )
           ],
         ),
       ),

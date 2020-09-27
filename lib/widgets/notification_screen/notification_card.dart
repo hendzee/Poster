@@ -1,10 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:poster/models/notification_card_model.dart';
+
+import '../../data/models/notification_card_model.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationCardModel cardModel;
-  NotificationCard({ this.cardModel });
+  NotificationCard({this.cardModel});
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +21,17 @@ class NotificationCard extends StatelessWidget {
                   color: Colors.black.withOpacity(0.3),
                   spreadRadius: 5,
                   blurRadius: 7,
-                  offset: Offset(0, 3)
-              )
-            ]
-        ),
+                  offset: Offset(0, 3))
+            ]),
         child: Stack(
           children: <Widget>[
             Positioned(
               right: 0,
               top: 0,
-              child: Icon(EvaIcons.closeCircle, color: Color(0xFFD14081),),
+              child: Icon(
+                EvaIcons.closeCircle,
+                color: Color(0xFFD14081),
+              ),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +45,9 @@ class NotificationCard extends StatelessWidget {
                     image: AssetImage(this.cardModel.image),
                   ),
                 ),
-                SizedBox(width: 10,),
+                SizedBox(
+                  width: 10,
+                ),
                 Wrap(
                   direction: Axis.vertical,
                   children: [
@@ -53,10 +57,17 @@ class NotificationCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 5,),
+                    SizedBox(
+                      height: 5,
+                    ),
                     Text(this.cardModel.eventTime),
-                    SizedBox(height: 5,),
-                    Text(this.cardModel.notifTime, style: TextStyle(fontSize: 12, color: Color(0xFFCED6E0) ),)
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      this.cardModel.notifTime,
+                      style: TextStyle(fontSize: 12, color: Color(0xFFCED6E0)),
+                    )
                   ],
                 )
               ],
