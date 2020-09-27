@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poster/cubit/recomended_cubit.dart';
+import 'package:poster/data/fake_data/fake_recomended_data.dart';
+import 'package:poster/data/recomended_repository.dart';
 
 import '../cubit/trending_cubit.dart';
 import '../data/trending_repository.dart';
@@ -7,6 +10,7 @@ import '../widgets/home_screen/coming_soon_list.dart'; // Substance of home scre
 import '../widgets/home_screen/recomended_list.dart'; // Substance of home screen
 import '../widgets/home_screen/top_content.dart'; // Substance of home screen
 import '../widgets/home_screen/trending_content.dart'; // Substance of home screen
+import '../widgets/home_screen/trending_content_loading.dart'; // Substance of home screen
 import '../widgets/home_screen/trending_title_content.dart'; // Substance of home screen
 
 class HomeScreen extends StatefulWidget {
@@ -19,8 +23,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TrendingCubit(FakeTrendingRepository()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TrendingCubit>(
+          create: (context) => TrendingCubit(FakeTrendingRepository()),
+        ),
+        BlocProvider<RecomendedCubit>(
+          create: (context) => RecomendedCubit(FakeRecomendedRepository()),
+        )
+      ],
       child: SafeArea(
           child: SingleChildScrollView(
         child: Column(
@@ -39,19 +50,22 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context, state) {
                 if (state is TrendingInitial) {
                   context.bloc<TrendingCubit>().getTrending(country);
-                  return Text('Loading');
+
+                  return TrendingContentLoading();
                 } else if (state is TrendingLoading) {
-                  return Text('Loading');
+                  return TrendingContentLoading();
                 } else if (state is TrendingLoaded) {
                   return TrendingContent(
                     posterCardModel: state.posterCardModel,
                   );
-                } else if (state is TrendingError) {
-                  return Text('Error to get data');
+                } else {
+                  return TrendingContentLoading();
                 }
               },
             ),
-            RecomendedList(),
+            RecomendedList(
+              country: this.country,
+            ),
             ComingSoonList()
           ],
         ),

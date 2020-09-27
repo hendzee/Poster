@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:poster/data/trending_repository.dart';
@@ -19,7 +17,7 @@ class TrendingCubit extends Cubit<TrendingState> {
       final trending = await _trendingRepository.fetchTrending(country);
       emit(TrendingLoaded(posterCardModel: trending));
     } catch (_) {
-      emit(TrendingError(message: 'Failed to get data'));
+      emit(const TrendingError(message: 'Failed to get data trending'));
     }
   }
 }

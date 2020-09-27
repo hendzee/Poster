@@ -1,16 +1,64 @@
 import 'package:flutter/material.dart';
-import '../../data/models/poster_card_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poster/cubit/recomended_cubit.dart';
+import 'package:poster/widgets/general/loading_poster_card.dart';
 import 'package:poster/widgets/general/poster_card.dart'; // Poster card model
 
+import '../../data/models/poster_card_model.dart';
+
 class RecomendedList extends StatelessWidget {
-  // This is dummy data for this page
-  final PosterCardModel posterCardModel1 = new PosterCardModel(
-      title: 'Harmony Concert 2020',
-      date: '20 Sep, 2020',
-      location: 'Embong anyar Street no 10, Malang',
-      description:
-          'Ipsum is simply dummy of the printing and typesetting industry. Lorem Ipsum',
-      posterImage: 'assets/dummy_images/poster1.png');
+  final String country;
+
+  RecomendedList({this.country});
+
+  // If data exist
+  Widget setRecomendedWidget(List<PosterCardModel> recomendedList) {
+    List<Widget> recomendedWidget = [];
+
+    for (int i = 0; i < recomendedList.length; i++) {
+      recomendedWidget.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 25),
+          child: PosterCard(
+            posterCardModel: recomendedList[i],
+          ),
+        ),
+      );
+
+      recomendedWidget.add(
+        SizedBox(
+          width: 25,
+        ),
+      );
+    }
+
+    return (Row(
+      children: recomendedWidget,
+    ));
+  }
+
+  // If loading or data not exist
+  Widget setRecomendedLoading() {
+    List<Widget> recomendedWidget = [];
+
+    for (int i = 0; i < 3; i++) {
+      recomendedWidget.add(
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25),
+            child: LoadingPosterCard()),
+      );
+
+      recomendedWidget.add(
+        SizedBox(
+          width: 25,
+        ),
+      );
+    }
+
+    return (Row(
+      children: recomendedWidget,
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,27 +100,33 @@ class RecomendedList extends StatelessWidget {
                     SizedBox(
                       width: 45,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 25),
-                      child: PosterCard(
-                        posterCardModel: this.posterCardModel1,
-                      ),
-                    ),
+                    BlocConsumer<RecomendedCubit, RecomendedState>(
+                        listener: (context, state) {
+                      if (state is RecomendedError) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                          ),
+                        );
+                      }
+                    }, builder: (context, state) {
+                      if (state is RecomendedInitial) {
+                        context
+                            .bloc<RecomendedCubit>()
+                            .getRecomendedList(country);
+
+                        return setRecomendedLoading();
+                      } else if (state is RecomendedLoading) {
+                        return setRecomendedLoading();
+                      } else if (state is RecomendedLoaded) {
+                        return setRecomendedWidget(state.recomendedList);
+                      } else {
+                        return setRecomendedLoading();
+                      }
+                    })
                   ],
                 ),
               ],
-            ),
-            SizedBox(
-              width: 25,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25),
-              child: PosterCard(
-                posterCardModel: this.posterCardModel1,
-              ),
-            ),
-            SizedBox(
-              width: 25,
             ),
           ],
         ));

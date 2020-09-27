@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 import './models/poster_card_model.dart';
-import '../data/fake_data/trending_data.dart'; // Fake trending data
+import 'fake_data/fake_trending_data.dart'; // Fake trending data
 
 abstract class TrendingRepository {
   Future<PosterCardModel> fetchTrending(String country);
