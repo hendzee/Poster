@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/recomended_cubit.dart';
-import 'package:poster/widgets/general/loading_poster_card.dart';
 import 'package:poster/widgets/general/poster_card.dart'; // Poster card model
 
 import '../../data/models/poster_card_model.dart';
+import 'recomended_list_loading.dart';
 
 class RecomendedList extends StatelessWidget {
   final String country;
@@ -23,29 +23,6 @@ class RecomendedList extends StatelessWidget {
             posterCardModel: recomendedList[i],
           ),
         ),
-      );
-
-      recomendedWidget.add(
-        SizedBox(
-          width: 25,
-        ),
-      );
-    }
-
-    return (Row(
-      children: recomendedWidget,
-    ));
-  }
-
-  // If loading or data not exist
-  Widget setRecomendedLoading() {
-    List<Widget> recomendedWidget = [];
-
-    for (int i = 0; i < 3; i++) {
-      recomendedWidget.add(
-        Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25),
-            child: LoadingPosterCard()),
       );
 
       recomendedWidget.add(
@@ -115,13 +92,13 @@ class RecomendedList extends StatelessWidget {
                             .bloc<RecomendedCubit>()
                             .getRecomendedList(country);
 
-                        return setRecomendedLoading();
+                        return RecomendedListLoading();
                       } else if (state is RecomendedLoading) {
-                        return setRecomendedLoading();
+                        return RecomendedListLoading();
                       } else if (state is RecomendedLoaded) {
                         return setRecomendedWidget(state.recomendedList);
                       } else {
-                        return setRecomendedLoading();
+                        return RecomendedListLoading();
                       }
                     })
                   ],

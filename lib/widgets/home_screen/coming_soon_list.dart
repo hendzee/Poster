@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/comingsoon_cubit.dart';
-import 'package:poster/widgets/home_screen/coming_soon_list_loading.dart';
 
 import '../../data/models/poster_card_model.dart';
 import '../general/poster_card.dart'; // Poster card model
+import 'coming_soon_list_loading.dart';
 
 class ComingSoonList extends StatelessWidget {
   final String country;
