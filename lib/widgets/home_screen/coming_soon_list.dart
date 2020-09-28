@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/comingsoon_cubit.dart';
+import 'package:poster/widgets/home_screen/coming_soon_list_loading.dart';
 
 import '../../data/models/poster_card_model.dart';
-import '../general/loading_poster_card.dart';
 import '../general/poster_card.dart'; // Poster card model
 
 class ComingSoonList extends StatelessWidget {
@@ -22,29 +22,6 @@ class ComingSoonList extends StatelessWidget {
             posterCardModel: recomendedList[i],
           ),
         ),
-      );
-
-      recomendedWidget.add(
-        SizedBox(
-          width: 25,
-        ),
-      );
-    }
-
-    return (Row(
-      children: recomendedWidget,
-    ));
-  }
-
-  // If loading or data not exist
-  Widget setComingSoonLoading() {
-    List<Widget> recomendedWidget = [];
-
-    for (int i = 0; i < 3; i++) {
-      recomendedWidget.add(
-        Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25),
-            child: LoadingPosterCard()),
       );
 
       recomendedWidget.add(
@@ -114,11 +91,11 @@ class ComingSoonList extends StatelessWidget {
                             .bloc<ComingsoonCubit>()
                             .getComingSoonList(country);
                       } else if (state is ComingsoonLoading) {
-                        return setComingSoonLoading();
+                        return ComingSoonListLoading();
                       } else if (state is ComingsoonLoaded) {
                         return setComingSoonWidget(state.comingSoonList);
                       } else {
-                        return setComingSoonLoading();
+                        return ComingSoonListLoading();
                       }
                     },
                   )
