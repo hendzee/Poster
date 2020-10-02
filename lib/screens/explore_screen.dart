@@ -1,11 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poster/widgets/general/loading_poster_card.dart';
+import 'package:poster/widgets/explore_screen/explore_list_loading.dart';
 
 import '../cubit/explore_cubit.dart';
 import '../data/explore_repository.dart';
-import '../data/models/poster_card_model.dart';
 import '../widgets/general/poster_card.dart';
 
 class ExploreScreen extends StatefulWidget {
@@ -14,15 +13,6 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  // This is dummy data for this page
-  final PosterCardModel posterCardModel1 = new PosterCardModel(
-      title: 'Harmony Concert 2020',
-      date: '20 Sep, 2020',
-      location: 'Embong anyar Street no 10, Malang',
-      description:
-          'Ipsum is simply dummy of the printing and typesetting industry. Lorem Ipsum',
-      posterImage: 'assets/dummy_images/poster1.png');
-
   // Set categories tab
   Widget _setCategoriesTab(String title, bool isActive) {
     return (Container(
@@ -102,9 +92,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     if (state is ExploreInitial) {
                       context.bloc<ExploreCubit>().getExploreList(country);
 
-                      return LoadingPosterCard();
+                      return ExploreListLoading();
                     } else if (state is ExploreLoading) {
-                      return LoadingPosterCard();
+                      return ExploreListLoading();
                     } else if (state is ExploreLoaded) {
                       return ListView.builder(
                         itemCount: state.exploreList.length,
@@ -119,7 +109,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         },
                       );
                     } else {
-                      return LoadingPosterCard();
+                      return ExploreListLoading();
                     }
                   },
                 ),
