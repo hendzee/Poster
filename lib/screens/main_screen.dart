@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   List<Widget> _screenOptions = [
     HomeScreen(),
-    ExplreScreen(),
+    ExploreScreen(),
     AddItemScreen(),
     NotificationScreen(),
     ProfileScreen(),

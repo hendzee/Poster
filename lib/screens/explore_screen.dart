@@ -1,15 +1,19 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:poster/widgets/general/poster_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poster/widgets/general/loading_poster_card.dart';
 
+import '../cubit/explore_cubit.dart';
+import '../data/explore_repository.dart';
 import '../data/models/poster_card_model.dart';
+import '../widgets/general/poster_card.dart';
 
-class ExplreScreen extends StatefulWidget {
+class ExploreScreen extends StatefulWidget {
   @override
-  _ExplreScreenState createState() => _ExplreScreenState();
+  _ExploreScreenState createState() => _ExploreScreenState();
 }
 
-class _ExplreScreenState extends State<ExplreScreen> {
+class _ExploreScreenState extends State<ExploreScreen> {
   // This is dummy data for this page
   final PosterCardModel posterCardModel1 = new PosterCardModel(
       title: 'Harmony Concert 2020',
@@ -23,10 +27,12 @@ class _ExplreScreenState extends State<ExplreScreen> {
   Widget _setCategoriesTab(String title, bool isActive) {
     return (Container(
         decoration: BoxDecoration(
-            color: Color(isActive ? 0xFF40407A : 0xFFABABD3),
-            borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                topRight: Radius.circular(10))),
+          color: Color(isActive ? 0xFF40407A : 0xFFABABD3),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            topRight: Radius.circular(10),
+          ),
+        ),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Text(
           title,
@@ -36,19 +42,23 @@ class _ExplreScreenState extends State<ExplreScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String country = 'Indonesia';
+
     return Scaffold(
-        appBar: AppBar(
-          leading: Container(),
-          centerTitle: true,
-          title: Text('Explore'),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 25),
-              child: Icon(EvaIcons.searchOutline),
-            )
-          ],
-        ),
-        body: Container(
+      appBar: AppBar(
+        leading: Container(),
+        centerTitle: true,
+        title: Text('Explore'),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 25),
+            child: Icon(EvaIcons.searchOutline),
+          )
+        ],
+      ),
+      body: BlocProvider(
+        create: (context) => ExploreCubit(FakeExploreRepository()),
+        child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -78,34 +88,46 @@ class _ExplreScreenState extends State<ExplreScreen> {
                 ),
               ),
               Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 25, left: 25, bottom: 25),
-                      child: PosterCard(
-                        posterCardModel: posterCardModel1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 25, left: 25, bottom: 25),
-                      child: PosterCard(
-                        posterCardModel: posterCardModel1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 25, left: 25, bottom: 25),
-                      child: PosterCard(
-                        posterCardModel: posterCardModel1,
-                      ),
-                    ),
-                  ],
+                child: BlocConsumer<ExploreCubit, ExploreState>(
+                  listener: (context, state) {
+                    if (state is ExploreError) {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is ExploreInitial) {
+                      context.bloc<ExploreCubit>().getExploreList(country);
+
+                      return LoadingPosterCard();
+                    } else if (state is ExploreLoading) {
+                      return LoadingPosterCard();
+                    } else if (state is ExploreLoaded) {
+                      return ListView.builder(
+                        itemCount: state.exploreList.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                right: 25, left: 25, bottom: 25),
+                            child: PosterCard(
+                              posterCardModel: state.exploreList[index],
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return LoadingPosterCard();
+                    }
+                  },
                 ),
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

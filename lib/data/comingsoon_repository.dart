@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../data/fake_data/fake_comingsoon_date.dart';
+import 'fake_data/fake_comingsoon_data.dart';
 import '../data/models/poster_card_model.dart';
 
 abstract class ComingSoonRepository {
