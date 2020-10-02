@@ -14,10 +14,10 @@ class FakeTrendingRepository implements TrendingRepository {
     return Future.delayed(Duration(seconds: 2), () {
       final random = Random();
 
-      // Fake network error
-      if (random.nextBool()) {
-        throw Exception;
-      }
+      // Uncoment to get error chance by 50:50
+      // if (random.nextBool()) {
+      //   throw Exception;
+      // }
 
       return FakeTrendingData.getTrendingCountry();
     });

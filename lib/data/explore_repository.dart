@@ -14,9 +14,10 @@ class FakeExploreRepository implements ExploreRepository {
     return Future.delayed(Duration(seconds: 2), () {
       final random = Random();
 
-      if (random.nextBool()) {
-        throw Exception;
-      }
+      // Uncoment to get error chance by 50:50
+      // if (random.nextBool()) {
+      //   throw Exception;
+      // }
 
       return FakeExploreData.getExploreList();
     });
