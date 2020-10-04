@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +15,30 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
+  ScrollController _scrollController = ScrollController();
+  ExploreCubit _exploreCubit = ExploreCubit(FakeExploreRepository());
+  final String country = 'Indonesia';
+  int _counter = 0; // Its dummy counter for infinite list
+
+  @override
+  void initState() {
+    _scrollController.addListener(_getMoreData);
+    super.initState();
+  }
+
+  void _getMoreData() {
+    double maxScroll = _scrollController.position.maxScrollExtent;
+    double currentScroll = _scrollController.position.pixels;
+
+    if (currentScroll == maxScroll && _counter < 5) {
+      _exploreCubit.getMoreExploreList(country);
+
+      this.setState(() {
+        _counter += 1;
+      });
+    }
+  }
+
   // Set categories tab
   Widget _setCategoriesTab(String title, bool isActive) {
     return (Container(
@@ -32,8 +58,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String country = 'Indonesia';
-
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
@@ -47,7 +71,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         ],
       ),
       body: BlocProvider(
-        create: (context) => ExploreCubit(FakeExploreRepository()),
+        create: (context) => _exploreCubit,
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,21 +119,33 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       return ExploreListLoading();
                     } else if (state is ExploreLoading) {
                       return ExploreListLoading();
+                    } else if (state is ExploreError) {
+                      return ExploreListLoading();
                     } else if (state is ExploreLoaded) {
                       return ListView.builder(
-                        itemCount: state.exploreList.length,
+                        controller: _scrollController,
+                        itemCount: _counter < 4
+                            ? state.exploreList.length + 1
+                            : state.exploreList.length,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                right: 25, left: 25, bottom: 25),
-                            child: PosterCard(
-                              posterCardModel: state.exploreList[index],
-                            ),
+                          if (index < state.exploreList.length) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 25, left: 25, bottom: 25),
+                              child: PosterCard(
+                                posterCardModel: state.exploreList[index],
+                              ),
+                            );
+                          }
+
+                          return Container(
+                            width: 30,
+                            height: 30,
+                            margin: EdgeInsets.all(10),
+                            child: Center(child: CircularProgressIndicator()),
                           );
                         },
                       );
-                    } else {
-                      return ExploreListLoading();
                     }
                   },
                 ),
