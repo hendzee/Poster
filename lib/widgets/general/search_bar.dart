@@ -26,6 +26,11 @@ class SearchBar extends SearchDelegate<String> {
     ThemeData theme = Theme.of(context);
     return theme.copyWith(
       textTheme: TextTheme(headline6: TextStyle(color: Colors.white)),
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: TextStyle(
+          color: Color(0xFFABABD3),
+        ),
+      ),
     );
   }
 

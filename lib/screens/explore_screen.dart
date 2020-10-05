@@ -4,6 +4,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/widgets/explore_screen/explore_list_loading.dart';
+import 'package:poster/widgets/general/search_bar.dart';
 
 import '../cubit/explore_cubit.dart';
 import '../data/explore_repository.dart';
@@ -66,7 +67,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 25),
-            child: Icon(EvaIcons.searchOutline),
+            child: GestureDetector(
+                onTap: () {
+                  showSearch(context: context, delegate: SearchBar());
+                },
+                child: Icon(EvaIcons.searchOutline)),
           )
         ],
       ),
