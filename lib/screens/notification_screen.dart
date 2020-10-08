@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../data/models/notification_card_model.dart';
+import '../cubit/notification_cubit.dart';
+import '../data/notification_repository.dart';
 import '../widgets/notification_screen/notification_card.dart'; // Substance of notification screen
+import '../widgets/notification_screen/notification_list_loading.dart';
 
 class NotificationScreen extends StatefulWidget {
   @override
@@ -9,13 +12,31 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  final NotificationCardModel dummyData = NotificationCardModel(
-    id: '1',
-    title: 'Mega Purple Concert 2020',
-    image: 'assets/dummy_images/poster1.png',
-    eventTime: 'Even begin in 3 hours',
-    notifTime: '28 Aug, 2020 7:52 PM',
-  );
+  NotificationCubit _notificationCubit =
+      NotificationCubit(FakeNotificationRepository());
+  String _userId = '311210045';
+  ScrollController _scrollController = ScrollController();
+  int _counter = 0; // Dummy counter to limit scrolling
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      _getMoreData();
+    });
+  }
+
+  void _getMoreData() {
+    double maxScroll = _scrollController.position.maxScrollExtent;
+    double currentScroll = _scrollController.position.pixels;
+
+    if (currentScroll == maxScroll && _counter < 5) {
+      _notificationCubit.getMoreNotificationList(_userId);
+      this.setState(() {
+        _counter += 1;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +46,50 @@ class _NotificationScreenState extends State<NotificationScreen> {
         leading: Container(),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            NotificationCard(
-              cardModel: this.dummyData,
-            )
-          ],
-        ),
-      ),
+      body: BlocProvider(
+          create: (context) => _notificationCubit,
+          child: BlocConsumer<NotificationCubit, NotificationState>(
+            listener: (context, state) {
+              if (state is NotificationError) {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(state.message),
+                ));
+              }
+            },
+            builder: (context, state) {
+              if (state is NotificationInitial) {
+                _notificationCubit.getNotificationList(_userId);
+                return NotificationListLoading();
+              } else if (state is NotificationLoading) {
+                return NotificationListLoading();
+              } else if (state is NotificationLoaded) {
+                return ListView.builder(
+                  controller: _scrollController,
+                  itemCount: _counter < 5
+                      ? state.notificationList.length + 1
+                      : state.notificationList.length,
+                  itemBuilder: (context, index) {
+                    if (index < state.notificationList.length) {
+                      return NotificationCard(
+                        cardModel: state.notificationList[index],
+                      );
+                    }
+
+                    return Container(
+                      width: 30,
+                      height: 30,
+                      margin: EdgeInsets.all(15),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return NotificationListLoading();
+              }
+            },
+          )),
     );
   }
 }
