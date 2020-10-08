@@ -58,34 +58,31 @@ class _ProfileScreenState extends State<ProfileScreen>
                         SizedBox(
                           width: 10,
                         ),
-                        Wrap(
-                          direction: Axis.vertical,
+                        Row(
+                          textBaseline: TextBaseline.alphabetic,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
                           children: [
-                            Text(
-                              'John Doe',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                            Container(
+                              constraints: BoxConstraints(maxWidth: 130),
+                              child: Text(
+                                'John Doe',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
                             ),
                             SizedBox(
-                              height: 5,
+                              width: 5,
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Edit Profile',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(
-                                  EvaIcons.edit2Outline,
-                                  size: 15,
-                                  color: Colors.white,
-                                )
-                              ],
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Color(0xFFD14081),
+                              child: Icon(
+                                EvaIcons.edit2Outline,
+                                size: 15,
+                                color: Colors.white,
+                              ),
                             )
                           ],
                         )
