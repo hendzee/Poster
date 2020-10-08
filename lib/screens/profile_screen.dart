@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: TabBar(
               controller: _controller,
-              unselectedLabelColor: Color(0xFFE3E8E9),
+              unselectedLabelColor: Color(0xFFABABD3),
               unselectedLabelStyle: TextStyle(color: Color(0xFFE3E8E9)),
               indicatorColor: Color(0xFF40407A),
               labelColor: Color(0xFF40407A),
