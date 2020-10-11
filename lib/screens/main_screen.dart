@@ -43,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: _screenOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
               title: Text('Home'),
