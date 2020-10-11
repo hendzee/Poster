@@ -7,7 +7,7 @@ import '../data/mine_repository.dart';
 import '../data/models/poster_card_model.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/general/poster_card.dart';
-import '../widgets/profile_screen/mine_list_loading.dart';
+import '../widgets/profile_screen/list_loading.dart';
 import '../widgets/profile_screen/user_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -136,9 +136,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                       builder: (context, state) {
                         if (state is MineInitial) {
                           _mineCubit.getMineList(userId);
-                          return MineListLoading();
+                          return ListLoading();
                         } else if (state is MineLoading) {
-                          return MineListLoading();
+                          return ListLoading();
                         } else if (state is MineLoaded) {
                           return ListView.builder(
                             controller: _scrollControllerMine,
@@ -168,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             },
                           );
                         } else {
-                          return MineListLoading();
+                          return ListLoading();
                         }
                       },
                     ),
@@ -190,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                           _subscriptionCubit.getSubscriptionList(userId);
                           return Text('Loading');
                         } else if (state is SubscriptionLoading) {
-                          return MineListLoading();
+                          return ListLoading();
                         } else if (state is SubscriptionLoaded) {
                           return ListView.builder(
                             controller: _scrollControllerSub,
@@ -221,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             },
                           );
                         } else {
-                          return MineListLoading();
+                          return ListLoading();
                         }
                       },
                     ),

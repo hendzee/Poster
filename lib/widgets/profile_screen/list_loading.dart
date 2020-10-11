@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/general/loading_poster_card.dart';
+import '../general/loading_poster_card.dart';
 
-class MineListLoading extends StatelessWidget {
+class ListLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
