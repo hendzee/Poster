@@ -3,6 +3,7 @@ import 'package:poster/cubit/mine_cubit.dart';
 import 'package:poster/data/mine_repository.dart';
 import 'package:poster/widgets/general/poster_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poster/widgets/profile_screen/mine_list_loading.dart';
 
 import '../widgets/profile_screen/user_profile.dart';
 
@@ -110,9 +111,9 @@ class _ProfileScreenState extends State<ProfileScreen>
                       builder: (context, state) {
                         if (state is MineInitial) {
                           _mineCubit.getMineList(userId);
-                          return Text('Loading');
+                          return MineListLoading();
                         } else if (state is MineLoading) {
-                          return Text('Loading');
+                          return MineListLoading();
                         } else if (state is MineLoaded) {
                           return ListView.builder(
                             controller: _scrollControllerMine,
@@ -142,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                             },
                           );
                         } else {
-                          return Text('Loading');
+                          return MineListLoading();
                         }
                       },
                     ),
