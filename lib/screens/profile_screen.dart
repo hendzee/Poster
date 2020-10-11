@@ -188,7 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                       builder: (context, state) {
                         if (state is SubscriptionInitial) {
                           _subscriptionCubit.getSubscriptionList(userId);
-                          return Text('Loading');
+                          return ListLoading();
                         } else if (state is SubscriptionLoading) {
                           return ListLoading();
                         } else if (state is SubscriptionLoaded) {
