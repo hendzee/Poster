@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:poster/cubit/mine_cubit.dart';
-import 'package:poster/data/mine_repository.dart';
-import 'package:poster/widgets/general/poster_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poster/widgets/profile_screen/mine_list_loading.dart';
+import 'package:poster/cubit/mine_cubit.dart';
+import 'package:poster/cubit/subscription_cubit.dart';
 
-import '../widgets/profile_screen/user_profile.dart';
-
+import '../data/mine_repository.dart';
 import '../data/models/poster_card_model.dart';
+import '../data/subscription_repository.dart';
+import '../widgets/general/poster_card.dart';
+import '../widgets/profile_screen/mine_list_loading.dart';
+import '../widgets/profile_screen/user_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -18,9 +19,13 @@ class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   ScrollController _scrollControllerMine = ScrollController();
+  ScrollController _scrollControllerSub = ScrollController();
   MineCubit _mineCubit = MineCubit(FakeMineRepository());
+  SubscriptionCubit _subscriptionCubit =
+      SubscriptionCubit(FakeSubscriptionRepository());
   String userId = '311210045'; // Dummy user id
   int counterMine = 0; // counterMine to limit infinite load
+  int counterSub = 0; // counter subsription list
 
   // This is dummy data for this page
   final PosterCardModel _posterCardModel1 = new PosterCardModel(
@@ -36,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
     _scrollControllerMine.addListener(_getMoreDataMine);
+    _scrollControllerSub.addListener(_getMoreDataSub);
   }
 
   _getMoreDataMine() {
@@ -50,11 +56,30 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
   }
 
+  _getMoreDataSub() {
+    double maxPositionSub = _scrollControllerSub.position.maxScrollExtent;
+    double currentPositionSub = _scrollControllerSub.position.pixels;
+
+    if (currentPositionSub == maxPositionSub && counterSub < 3) {
+      _subscriptionCubit.getMoreSubscriptionList(userId);
+      this.setState(() {
+        counterSub += 1;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocProvider(
-      create: (context) => _mineCubit,
+        body: MultiBlocProvider(
+      providers: [
+        BlocProvider<MineCubit>(
+          create: (context) => _mineCubit,
+        ),
+        BlocProvider<SubscriptionCubit>(
+          create: (context) => _subscriptionCubit,
+        )
+      ],
       child: SafeArea(
         child: Column(
           children: [
@@ -149,15 +174,56 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 25),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          PosterCard(
-                            posterCardModel: _posterCardModel1,
-                          ),
-                        ],
-                      ),
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    child: BlocConsumer<SubscriptionCubit, SubscriptionState>(
+                      listener: (context, state) {
+                        if (state is SubscriptionError) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(state.message),
+                            ),
+                          );
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is SubscriptionInitial) {
+                          _subscriptionCubit.getSubscriptionList(userId);
+                          return Text('Loading');
+                        } else if (state is SubscriptionLoading) {
+                          return MineListLoading();
+                        } else if (state is SubscriptionLoaded) {
+                          return ListView.builder(
+                            controller: _scrollControllerSub,
+                            itemCount: counterSub < 3
+                                ? state.subscriptionList.length + 1
+                                : state.subscriptionList.length,
+                            itemBuilder: (context, index) {
+                              return index < state.subscriptionList.length
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                        bottom: 25,
+                                      ),
+                                      child: PosterCard(
+                                        posterCardModel:
+                                            state.subscriptionList[index],
+                                      ),
+                                    )
+                                  : Container(
+                                      width: 30,
+                                      height: 30,
+                                      margin: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    );
+                            },
+                          );
+                        } else {
+                          return MineListLoading();
+                        }
+                      },
                     ),
                   ),
                 ],
