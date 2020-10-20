@@ -37,10 +37,10 @@ class PosterCard extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           boxShadow: [
                             BoxShadow(
-                                color: Colors.black.withOpacity(0.3),
+                                color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 5.0,
                                 blurRadius: 7.0,
-                                offset: Offset(0, 3))
+                                offset: Offset(0, 5))
                           ]),
                       child: Stack(
                         children: <Widget>[
