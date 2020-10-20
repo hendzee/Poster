@@ -90,9 +90,6 @@ class SearchBar extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: SearchbarResult(),
-    );
+    return SearchbarResult();
   }
 }
