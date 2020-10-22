@@ -6,6 +6,7 @@ import './screens/detail_item_screen.dart';
 import './screens/login_screen.dart';
 import './screens/main_screen.dart';
 import './screens/splash_screen.dart';
+import 'screens/register_profile_screen.dart';
 
 void main() {
   runApp(Poster());
@@ -17,11 +18,12 @@ class Poster extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-          scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-          primaryColor: Color(0xFF40407A),
-          appBarTheme: AppBarTheme(
-            elevation: 0.5,
-          )),
+        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+        primaryColor: Color(0xFF40407A),
+        appBarTheme: AppBarTheme(
+          elevation: 0.5,
+        ),
+      ),
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
@@ -29,6 +31,7 @@ class Poster extends StatelessWidget {
         '/add_item': (context) => AddItemScreen(),
         '/detail_item': (context) => DetailItemScreen(),
         '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterProfileScreen()
       },
     );
   }

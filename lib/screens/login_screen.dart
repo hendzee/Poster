@@ -10,9 +10,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordSecure = true;
 
-  // Handle login
+  // Handle login navigation
   void _handleLogin(BuildContext context) {
     Navigator.pushReplacementNamed(context, '/main');
+  }
+
+  // Handle register navigation
+  void _handleRegister(BuildContext context) {
+    Navigator.pushNamed(context, '/register');
   }
 
   @override
@@ -25,9 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 25),
           decoration: BoxDecoration(
-              color: Color(0xFF40407A),
-              borderRadius:
-                  BorderRadius.only(bottomRight: Radius.circular(60))),
+            color: Color(0xFF40407A),
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(60),
+            ),
+          ),
           child: Column(
             children: [
               SizedBox(
@@ -136,19 +143,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      decoration: BoxDecoration(
+                    GestureDetector(
+                      onTap: () => _handleRegister(context),
+                      child: Container(
+                        width: double.infinity,
+                        height: 50,
+                        decoration: BoxDecoration(
                           color: Color(0xFF7171A6),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Center(
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                              fontSize: 18,
+                            ),
+                          ),
                         ),
                       ),
                     ),
