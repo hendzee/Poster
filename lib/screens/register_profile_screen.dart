@@ -9,6 +9,11 @@ class RegisterProfileScreen extends StatefulWidget {
 class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  // Handle register profile
+  void _handleRegisterProfile(BuildContext context) {
+    Navigator.pushNamed(context, '/register_password');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +27,7 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
             color: Colors.white,
           ),
         ),
-        title: Text('Register'),
+        title: Text('Input Profile'),
         centerTitle: true,
       ),
       body: Container(
@@ -51,11 +56,14 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                'Next',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () => _handleRegisterProfile(context),
+                child: Text(
+                  'Next',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )
             ],
