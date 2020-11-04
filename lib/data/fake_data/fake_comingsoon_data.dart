@@ -4,7 +4,7 @@ class FakeComingSoonData {
   static final List<PosterCardModel> comingSoonList = [
     PosterCardModel(
       title: 'Mega Concert 2020',
-      posterImage: 'assets/dummy_images/poster1.png',
+      posterImage: 'assets/dummy_images/poster3.png',
       date: '20 Sep, 2020',
       location: 'Jl. Pahlawan Jaya no. 10, Malang',
       description:
@@ -12,7 +12,7 @@ class FakeComingSoonData {
     ),
     PosterCardModel(
       title: 'Mega Concert 2020',
-      posterImage: 'assets/dummy_images/poster1.png',
+      posterImage: 'assets/dummy_images/poster7.png',
       date: '20 Sep, 2020',
       location: 'Jl. Pahlawan Jaya no. 10, Malang',
       description:

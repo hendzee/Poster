@@ -52,6 +52,12 @@ flutter:
 #  assets:
   assets:
     - assets/dummy_images/poster1.png
+    - assets/dummy_images/poster2.png
+    - assets/dummy_images/poster3.png
+    - assets/dummy_images/poster4.png
+    - assets/dummy_images/poster5.png
+    - assets/dummy_images/poster6.png
+    - assets/dummy_images/poster7.png
     - assets/dummy_images/user1.png
     - assets/dummy_images/poster-large1.png
   fonts:
