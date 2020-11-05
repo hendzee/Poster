@@ -8,6 +8,7 @@ import './screens/main_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/register_profile_screen.dart';
 import './screens/register_password_screen.dart';
+import './screens/profile_menu_screen.dart';
 
 void main() {
   runApp(Poster());
@@ -27,13 +28,14 @@ class Poster extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
+        '/': (context) => ProfileMenuScreen(),
         '/main': (context) => MainScreen(),
         '/add_item': (context) => AddItemScreen(),
         '/detail_item': (context) => DetailItemScreen(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterProfileScreen(),
         '/register_password': (context) => RegisterPasswordScreen(),
+        // '/profile_menu': (context) => ProfileMenuScreen(),
       },
     );
   }
