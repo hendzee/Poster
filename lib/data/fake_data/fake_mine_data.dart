@@ -4,7 +4,7 @@ class FakeMineData {
   static final List<PosterCardModel> mineList = [
     PosterCardModel(
       title: 'Mega Concert 2020',
-      posterImage: 'assets/dummy_images/poster1.png',
+      posterImage: 'assets/dummy_images/poster2.png',
       date: '20 Sep, 2020',
       location: 'Jl. Pahlawan Jaya no. 10, Malang',
       description:
@@ -20,7 +20,7 @@ class FakeMineData {
     ),
     PosterCardModel(
       title: 'Mega Concert 2020',
-      posterImage: 'assets/dummy_images/poster1.png',
+      posterImage: 'assets/dummy_images/poster7.png',
       date: '20 Sep, 2020',
       location: 'Jl. Pahlawan Jaya no. 10, Malang',
       description:
