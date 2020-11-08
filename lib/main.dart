@@ -29,8 +29,7 @@ class Poster extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // '/': (context) => SplashScreen(),
-        '/': (context) => EditProfileScreen(),
+        '/': (context) => SplashScreen(),
         '/main': (context) => MainScreen(),
         '/add_item': (context) => AddItemScreen(),
         '/detail_item': (context) => DetailItemScreen(),
@@ -38,7 +37,7 @@ class Poster extends StatelessWidget {
         '/register': (context) => RegisterProfileScreen(),
         '/register_password': (context) => RegisterPasswordScreen(),
         '/profile_menu': (context) => ProfileMenuScreen(),
-        // '/edit_profile': (context) => EditProfileScreen()
+        '/edit_profile': (context) => EditProfileScreen()
       },
     );
   }

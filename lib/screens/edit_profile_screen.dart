@@ -82,6 +82,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         title: Text('Edit Profile'),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
+          icon: Icon(
+            EvaIcons.arrowBackOutline,
+            color: Colors.white,
+          ),
+        ),
       ),
       bottomSheet: BottomButton(
         title: 'SAVE',

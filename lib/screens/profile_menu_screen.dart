@@ -7,6 +7,11 @@ class ProfileMenuScreen extends StatefulWidget {
 }
 
 class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
+  // Navigate to edit profile screen
+  void _toEditProfile(BuildContext context) {
+    Navigator.pushNamed(context, '/edit_profile');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +32,18 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Row(
-                textBaseline: TextBaseline.alphabetic,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                children: [
-                  Icon(EvaIcons.personOutline),
-                  SizedBox(width: 10),
-                  Text('Edit Profile'),
-                ],
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () => _toEditProfile(context),
+                child: Row(
+                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  children: [
+                    Icon(EvaIcons.personOutline),
+                    SizedBox(width: 10),
+                    Text('Edit Profile'),
+                  ],
+                ),
               ),
             ),
             Divider(
