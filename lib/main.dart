@@ -28,14 +28,14 @@ class Poster extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => ProfileMenuScreen(),
+        '/': (context) => SplashScreen(),
         '/main': (context) => MainScreen(),
         '/add_item': (context) => AddItemScreen(),
         '/detail_item': (context) => DetailItemScreen(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterProfileScreen(),
         '/register_password': (context) => RegisterPasswordScreen(),
-        // '/profile_menu': (context) => ProfileMenuScreen(),
+        '/profile_menu': (context) => ProfileMenuScreen(),
       },
     );
   }

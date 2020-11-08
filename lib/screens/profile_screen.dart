@@ -90,9 +90,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                   Container(
                     height: 70,
                     decoration: BoxDecoration(
-                        color: Color(0xFF40407A),
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(60))),
+                      color: Color(0xFF40407A),
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(60),
+                      ),
+                    ),
                   ),
                   UserProfile(),
                 ],

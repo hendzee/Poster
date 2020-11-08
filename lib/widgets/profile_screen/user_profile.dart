@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class UserProfile extends StatelessWidget {
+  // Navigate to profile menu list page
+  void toProfileMenu(BuildContext context) {
+    Navigator.pushNamed(context, '/profile_menu');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -32,13 +37,18 @@ class UserProfile extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                CircleAvatar(
-                  radius: 15,
-                  backgroundColor: Color(0xFFD14081),
-                  child: Icon(
-                    EvaIcons.edit2Outline,
-                    size: 15,
-                    color: Colors.white,
+                GestureDetector(
+                  onTap: () {
+                    toProfileMenu(context);
+                  },
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Color(0xFFD14081),
+                    child: Icon(
+                      EvaIcons.edit2Outline,
+                      size: 15,
+                      color: Colors.white,
+                    ),
                   ),
                 )
               ],
