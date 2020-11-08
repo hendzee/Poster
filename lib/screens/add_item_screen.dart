@@ -11,6 +11,7 @@ import '../widgets/general/bottom_button.dart';
 
 // Enum radio button price
 enum PriceType { free, paid }
+// Enum for camera and gallery
 enum ImagePickerType { camera, file }
 
 class AddItemScreen extends StatefulWidget {
@@ -97,9 +98,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
       pickedFile = await _picker.getImage(source: ImageSource.gallery);
     }
 
-    setState(() {
-      _poster = File(pickedFile.path);
-    });
+    if (pickedFile != null) {
+      setState(() {
+        _poster = File(pickedFile.path);
+      });
+    }
   }
 
   // Set image poster
