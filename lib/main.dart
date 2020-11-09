@@ -10,6 +10,7 @@ import './screens/register_profile_screen.dart';
 import './screens/register_password_screen.dart';
 import './screens/profile_menu_screen.dart';
 import './screens/edit_profile_screen.dart';
+import './screens/change_password_screen.dart';
 
 void main() {
   runApp(Poster());
@@ -37,7 +38,8 @@ class Poster extends StatelessWidget {
         '/register': (context) => RegisterProfileScreen(),
         '/register_password': (context) => RegisterPasswordScreen(),
         '/profile_menu': (context) => ProfileMenuScreen(),
-        '/edit_profile': (context) => EditProfileScreen()
+        '/edit_profile': (context) => EditProfileScreen(),
+        '/change_password': (context) => ChangePasswordScreen(),
       },
     );
   }

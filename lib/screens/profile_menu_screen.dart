@@ -12,6 +12,11 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
     Navigator.pushNamed(context, '/edit_profile');
   }
 
+  // Navigate to change password screen
+  void _toChangePassword(BuildContext context) {
+    Navigator.pushNamed(context, '/change_password');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,14 +56,17 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Row(
-                textBaseline: TextBaseline.alphabetic,
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                children: [
-                  Icon(EvaIcons.lockOutline),
-                  SizedBox(width: 10),
-                  Text('Change Password'),
-                ],
+              child: GestureDetector(
+                onTap: () => _toChangePassword(context),
+                child: Row(
+                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  children: [
+                    Icon(EvaIcons.lockOutline),
+                    SizedBox(width: 10),
+                    Text('Change Password'),
+                  ],
+                ),
               ),
             ),
             Divider(
