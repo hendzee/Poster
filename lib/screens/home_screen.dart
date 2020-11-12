@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               builder: (context, state) {
                 if (state is TrendingInitial) {
-                  context.bloc<TrendingCubit>().getTrending(country);
+                  BlocProvider.of<TrendingCubit>(context).getTrending(country);
 
                   return TrendingContentLoading();
                 } else if (state is TrendingLoading) {
