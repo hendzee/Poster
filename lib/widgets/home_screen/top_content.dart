@@ -59,7 +59,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 25,
+                        radius: 20,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
@@ -71,7 +71,10 @@ class TopContent extends StatelessWidget {
                     Text(
                       'Concert',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -84,7 +87,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 25,
+                        radius: 20,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
@@ -96,7 +99,10 @@ class TopContent extends StatelessWidget {
                     Text(
                       'Comunity',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -109,7 +115,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 25,
+                        radius: 20,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
@@ -121,7 +127,10 @@ class TopContent extends StatelessWidget {
                     Text(
                       'Festival',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -134,7 +143,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 25,
+                        radius: 20,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
@@ -146,7 +155,10 @@ class TopContent extends StatelessWidget {
                     Text(
                       'Religion',
                       style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
