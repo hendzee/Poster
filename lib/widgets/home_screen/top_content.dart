@@ -57,9 +57,15 @@ class TopContent extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Icon(
-                        EvaIcons.headphonesOutline,
-                        color: Colors.white,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 25,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Image(
+                            image: AssetImage('assets/images/ticket.png'),
+                          ),
+                        ),
                       ),
                     ),
                     Text(
@@ -76,9 +82,15 @@ class TopContent extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Icon(
-                        EvaIcons.peopleOutline,
-                        color: Colors.white,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 25,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Image(
+                            image: AssetImage('assets/images/person.png'),
+                          ),
+                        ),
                       ),
                     ),
                     Text(
@@ -95,9 +107,15 @@ class TopContent extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Icon(
-                        EvaIcons.sunOutline,
-                        color: Colors.white,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 25,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Image(
+                            image: AssetImage('assets/images/trumpet.png'),
+                          ),
+                        ),
                       ),
                     ),
                     Text(
@@ -114,9 +132,15 @@ class TopContent extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Icon(
-                        EvaIcons.moonOutline,
-                        color: Colors.white,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 25,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Image(
+                            image: AssetImage('assets/images/mosque.png'),
+                          ),
+                        ),
                       ),
                     ),
                     Text(

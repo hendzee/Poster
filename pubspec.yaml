@@ -51,6 +51,10 @@ flutter:
 
 #  assets:
   assets:
+    - assets/images/ticket.png
+    - assets/images/person.png
+    - assets/images/trumpet.png
+    - assets/images/mosque.png
     - assets/dummy_images/poster1.png
     - assets/dummy_images/poster2.png
     - assets/dummy_images/poster3.png
