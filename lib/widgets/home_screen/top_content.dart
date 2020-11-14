@@ -59,7 +59,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 20,
+                        radius: 25,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
@@ -87,7 +87,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 20,
+                        radius: 25,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
@@ -115,7 +115,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 20,
+                        radius: 25,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
@@ -143,7 +143,7 @@ class TopContent extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 10.0),
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
-                        radius: 20,
+                        radius: 25,
                         child: Padding(
                           padding: const EdgeInsets.all(5),
                           child: Image(
