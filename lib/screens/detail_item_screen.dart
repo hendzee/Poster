@@ -23,6 +23,11 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
       description:
           'Ipsum is simply dummy  of the printing and industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,  when an unknown printer.');
 
+  // Navigate to poster image detail
+  _toPosterImage(BuildContext context) {
+    Navigator.pushNamed(context, '/detail_poster_image');
+  }
+
   // Set info
   Widget _setInfo(Icon icon, String info) {
     return Padding(
@@ -42,15 +47,15 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Detail Item'),
-          centerTitle: true,
-        ),
-        bottomSheet: BottomButton(
-          title: 'SUBSCRIBE',
-        ),
-        body: SingleChildScrollView(
-            child: Column(
+      appBar: AppBar(
+        title: Text('Detail Item'),
+        centerTitle: true,
+      ),
+      bottomSheet: BottomButton(
+        title: 'SUBSCRIBE',
+      ),
+      body: SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
@@ -64,8 +69,11 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
                       width: 200,
                       height: 350,
                       decoration: BoxDecoration(
-                          color: Color(0xFFF0EBF4),
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                        color: Color(0xFFF0EBF4),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
                     ),
                   ),
                   Positioned(
@@ -86,13 +94,16 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
                   Positioned(
                     left: 100,
                     top: 70,
-                    child: CircleAvatar(
-                        radius: 15,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          EvaIcons.expandOutline,
-                          color: Colors.grey,
-                        )),
+                    child: GestureDetector(
+                      onTap: () => _toPosterImage(context),
+                      child: CircleAvatar(
+                          radius: 15,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            EvaIcons.expandOutline,
+                            color: Colors.grey,
+                          )),
+                    ),
                   ),
                   Positioned(
                       top: 60,
@@ -143,6 +154,8 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
               height: 90,
             )
           ],
-        )));
+        ),
+      ),
+    );
   }
 }
