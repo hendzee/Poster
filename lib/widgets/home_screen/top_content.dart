@@ -12,10 +12,11 @@ class TopContent extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
       width: double.infinity,
       decoration: BoxDecoration(
-          color: const Color(0XFF40407A),
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(50.0),
-          )),
+        color: const Color(0XFF40407A),
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(50.0),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
