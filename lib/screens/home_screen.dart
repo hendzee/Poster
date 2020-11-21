@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/comingsoon_cubit.dart';
 import 'package:poster/cubit/recomended_cubit.dart';
@@ -24,6 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+    );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<TrendingCubit>(

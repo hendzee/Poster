@@ -1,6 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 class RegisterProfileScreen extends StatefulWidget {
   @override
   _RegisterProfileScreenState createState() => _RegisterProfileScreenState();
@@ -16,6 +18,8 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -24,7 +28,6 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
           },
           icon: Icon(
             EvaIcons.arrowBackOutline,
-            color: Colors.white,
           ),
         ),
         title: Text('Input Profile'),

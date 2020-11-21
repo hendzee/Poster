@@ -1,6 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 class RegisterPasswordScreen extends StatefulWidget {
   @override
   _RegisterPasswordScreenState createState() => _RegisterPasswordScreenState();
@@ -21,6 +23,8 @@ class _RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -29,7 +33,6 @@ class _RegisterPasswordScreenState extends State<RegisterPasswordScreen> {
           },
           icon: Icon(
             EvaIcons.arrowBackOutline,
-            color: Colors.white,
           ),
         ),
         title: Text('Input Password'),

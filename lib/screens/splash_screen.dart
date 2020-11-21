@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -24,9 +26,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: const Color(0XFF40407A),
-    ));
+    FlutterStatusbarcolor.setStatusBarColor(Color(0xFF40407A));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+    );
+
     return Scaffold(
       body: Container(
         color: const Color(0xFF40407A),

@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 
 import '../widgets/general/bottom_button.dart';
 
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 // Enum for camera and gallery
 enum ImagePickerType { camera, file }
 
@@ -78,6 +80,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Profile'),
@@ -88,7 +92,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           },
           icon: Icon(
             EvaIcons.arrowBackOutline,
-            color: Colors.white,
           ),
         ),
       ),

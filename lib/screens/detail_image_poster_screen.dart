@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 class DetailImagePosterScreen extends StatefulWidget {
   @override
@@ -10,12 +11,13 @@ class DetailImagePosterScreen extends StatefulWidget {
 class _DetailImagePosterScreenState extends State<DetailImagePosterScreen> {
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
             EvaIcons.arrowBackOutline,
-            color: Colors.white,
           ),
           onPressed: () => Navigator.pop(context, false),
         ),

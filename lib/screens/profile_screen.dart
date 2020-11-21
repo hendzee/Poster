@@ -9,6 +9,8 @@ import '../widgets/general/poster_card.dart';
 import '../widgets/profile_screen/list_loading.dart';
 import '../widgets/profile_screen/user_profile.dart';
 
+import 'package:flutter/services.dart';
+
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -60,6 +62,10 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+    );
+
     return Scaffold(
         body: MultiBlocProvider(
       providers: [

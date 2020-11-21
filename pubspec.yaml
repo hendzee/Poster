@@ -31,8 +31,9 @@ dependencies:
   touchable_opacity: ^1.1.0
   bloc: ^6.1.0
   flutter_bloc: ^6.1.0
-
-  shimmer:
+  flutter_statusbarcolor: ^0.2.3
+  shimmer: ^1.1.2
+  focus_detector: ^1.0.3
 
 dev_dependencies:
   flutter_test:

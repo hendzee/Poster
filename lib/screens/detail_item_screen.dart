@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../data/models/item_model.dart';
 import '../widgets/general/bottom_button.dart';
 
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 class DetailItemScreen extends StatefulWidget {
   @override
   _DetailItemScreenState createState() => _DetailItemScreenState();
@@ -46,6 +48,8 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail Item'),

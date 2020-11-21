@@ -1,12 +1,16 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
+import 'package:focus_detector/focus_detector.dart';
 
 import 'add_item_screen.dart';
 import 'explore_screen.dart';
 import 'home_screen.dart';
 import 'notification_screen.dart';
 import 'profile_screen.dart';
+
+import 'package:flutter/services.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -23,6 +27,8 @@ class _MainScreenState extends State<MainScreen> {
     ProfileScreen(),
   ];
 
+  final _resumeDetectorKey = UniqueKey();
+
   // On item bottom navigation tapped
   void _onItemTapped(int index, BuildContext context) {
     if (index == 2) {
@@ -36,12 +42,26 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Color(0xFF40407A),
-        statusBarIconBrightness: Brightness.light));
+    if (_selectedIndex == 0 || _selectedIndex == 4) {
+      FlutterStatusbarcolor.setStatusBarColor(Color(0xFF40407A));
+      SystemChrome.setSystemUIOverlayStyle(
+          SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light));
+    } else {
+      FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+    }
 
     return Scaffold(
-      body: _screenOptions.elementAt(_selectedIndex),
+      body: FocusDetector(
+          key: _resumeDetectorKey,
+          onFocusGained: () {
+            if (_selectedIndex == 0 || _selectedIndex == 4) {
+              FlutterStatusbarcolor.setStatusBarColor(Color(0xFF40407A));
+              SystemChrome.setSystemUIOverlayStyle(
+                SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+              );
+            }
+          },
+          child: _screenOptions.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: [

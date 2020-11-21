@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 class ProfileMenuScreen extends StatefulWidget {
   @override
@@ -19,6 +20,8 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -27,7 +30,6 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             },
             icon: Icon(
               EvaIcons.arrowBackOutline,
-              color: Colors.white,
             ),
           ),
           title: Text('Profile Menu'),

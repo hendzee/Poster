@@ -24,8 +24,9 @@ class Poster extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-        primaryColor: Color(0xFF40407A),
+        primaryColor: Colors.white,
         appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
           elevation: 0.5,
         ),
       ),

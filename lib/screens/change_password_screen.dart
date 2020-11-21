@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../widgets/general/bottom_button.dart';
 
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 class ChangePasswordScreen extends StatefulWidget {
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
@@ -15,6 +17,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Change Password'),
@@ -23,7 +27,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           onPressed: () => Navigator.pop(context, false),
           icon: Icon(
             EvaIcons.arrowBackOutline,
-            color: Colors.white,
           ),
         ),
       ),
