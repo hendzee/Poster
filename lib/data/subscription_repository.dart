@@ -1,4 +1,3 @@
-import 'package:poster/data/fake_data/fake_mine_data.dart';
 import 'package:poster/data/fake_data/fake_subscription_data.dart';
 
 import '../data/models/poster_card_model.dart';

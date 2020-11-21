@@ -87,8 +87,7 @@ class ComingSoonList extends StatelessWidget {
                     },
                     builder: (context, state) {
                       if (state is ComingsoonInitial) {
-                        context
-                            .bloc<ComingsoonCubit>()
+                        BlocProvider.of<ComingsoonCubit>(context)
                             .getComingSoonList(country);
                         return ComingSoonListLoading();
                       } else if (state is ComingsoonLoading) {

@@ -88,8 +88,7 @@ class RecomendedList extends StatelessWidget {
                       }
                     }, builder: (context, state) {
                       if (state is RecomendedInitial) {
-                        context
-                            .bloc<RecomendedCubit>()
+                        BlocProvider.of<RecomendedCubit>(context)
                             .getRecomendedList(country);
 
                         return RecomendedListLoading();

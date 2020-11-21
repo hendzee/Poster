@@ -1,4 +1,4 @@
-import 'dart:math';
+// import 'dart:math';
 
 import 'fake_data/fake_comingsoon_data.dart';
 import '../data/models/poster_card_model.dart';
@@ -11,7 +11,7 @@ class FakeComingSoonRepository implements ComingSoonRepository {
   @override
   Future<List<PosterCardModel>> fetchComingSoonList(String country) {
     return Future.delayed(Duration(seconds: 2), () {
-      final random = Random();
+      // final random = Random();
 
       // Uncoment to get error chance by 50:50
       // if (random.nextBool()) {

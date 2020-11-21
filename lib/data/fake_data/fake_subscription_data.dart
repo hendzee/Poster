@@ -1,7 +1,7 @@
 import '../models/poster_card_model.dart';
 
 class FakeSubscriptionData {
-  static final List<PosterCardModel> SubscriptionList = [
+  static final List<PosterCardModel> subscriptionList = [
     PosterCardModel(
       title: 'Mega Concert 2020',
       posterImage: 'assets/dummy_images/poster3.png',
@@ -29,6 +29,6 @@ class FakeSubscriptionData {
   ];
 
   static List<PosterCardModel> getSubscriptionList() {
-    return SubscriptionList;
+    return subscriptionList;
   }
 }

@@ -4,7 +4,6 @@ import 'package:poster/cubit/mine_cubit.dart';
 import 'package:poster/cubit/subscription_cubit.dart';
 
 import '../data/mine_repository.dart';
-import '../data/models/poster_card_model.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/general/poster_card.dart';
 import '../widgets/profile_screen/list_loading.dart';
@@ -26,15 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen>
   String userId = '311210045'; // Dummy user id
   int counterMine = 0; // counterMine to limit infinite load
   int counterSub = 0; // counter subsription list
-
-  // This is dummy data for this page
-  final PosterCardModel _posterCardModel1 = new PosterCardModel(
-      title: 'Harmony Concert 2020',
-      date: '20 Sep, 2020',
-      location: 'Embong anyar Street no 10, Malang',
-      description:
-          'Ipsum is simply dummy of the printing and typesetting industry. Lorem Ipsum',
-      posterImage: 'assets/dummy_images/poster1.png');
 
   @override
   void initState() {

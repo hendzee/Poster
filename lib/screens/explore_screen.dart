@@ -117,7 +117,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   },
                   builder: (context, state) {
                     if (state is ExploreInitial) {
-                      context.bloc<ExploreCubit>().getExploreList(country);
+                      BlocProvider.of<ExploreCubit>(context)
+                          .getExploreList(country);
 
                       return ExploreListLoading();
                     } else if (state is ExploreLoading) {
@@ -149,6 +150,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           );
                         },
                       );
+                    } else {
+                      return null;
                     }
                   },
                 ),
