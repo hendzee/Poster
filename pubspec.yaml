@@ -24,16 +24,25 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.3
+  # Eva icons
   eva_icons_flutter: ^1.0.4
+  # Date range
   date_range_picker: ^1.0.5
   intl: ^0.16.1
+  # Image picker
   image_picker: ^0.6.7+6
-  touchable_opacity: ^1.1.0
+  # Bloc
   bloc: ^6.1.0
+  # FLutter Bloc
   flutter_bloc: ^6.1.0
+  # Statusbar color switcher
   flutter_statusbarcolor: ^0.2.3
+  # Shimmer effect
   shimmer: ^1.1.2
+  # Detect focus state app on entire page
   focus_detector: ^1.0.3
+  # Lib for API handler
+  http: ^0.12.2
 
 dev_dependencies:
   flutter_test:
