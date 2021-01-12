@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
+import '../modules/local_data.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,8 +14,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   /// Navigate to to main screen
   Future _toMain() async {
+    // Check user local data exsitension
+    bool isLogin = await LocalData.getLoginLocalData();
+
     return Timer(Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacementNamed('/login');
+      // Direct to main if logged
+      if (isLogin) {
+        Navigator.of(context).pushReplacementNamed('/main');
+      } else {
+        Navigator.of(context).pushReplacementNamed('/login');
+      }
     });
   }
 
