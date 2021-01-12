@@ -43,6 +43,8 @@ dependencies:
   focus_detector: ^1.0.3
   # Lib for API handler
   http: ^0.12.2
+  # Lib for save data to local storage
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:
