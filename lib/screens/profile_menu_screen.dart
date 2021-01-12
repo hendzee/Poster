@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileMenuScreen extends StatefulWidget {
   @override
@@ -16,6 +17,19 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
   // Navigate to change password screen
   void _toChangePassword(BuildContext context) {
     Navigator.pushNamed(context, '/change_password');
+  }
+
+  // Handle logout
+  _handleLogout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.clear();
+
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/login',
+      (route) => false,
+    );
   }
 
   @override
@@ -76,17 +90,20 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Row(
-                textBaseline: TextBaseline.alphabetic,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(EvaIcons.logOutOutline),
-                  SizedBox(width: 10),
-                  Text(
-                    'Log Out',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
+              child: GestureDetector(
+                onTap: () => _handleLogout(context),
+                child: Row(
+                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(EvaIcons.logOutOutline),
+                    SizedBox(width: 10),
+                    Text(
+                      'Log Out',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
             ),
             Divider(
