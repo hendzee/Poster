@@ -15,7 +15,8 @@ class UserLoading extends UserState {
 
 class UserLoaded extends UserState {
   final UserModel user;
-  const UserLoaded({this.user});
+  final bool isLogin;
+  const UserLoaded({this.user, this.isLogin});
 
   @override
   bool operator ==(Object o) {

@@ -1,8 +1,13 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:focus_detector/focus_detector.dart';
+import 'package:poster/cubit/user_cubit.dart';
+import 'package:poster/data/user_repository.dart';
+
+import '../modules/local_data.dart';
 
 import 'add_item_screen.dart';
 import 'explore_screen.dart';
@@ -29,6 +34,9 @@ class _MainScreenState extends State<MainScreen> {
 
   final _resumeDetectorKey = UniqueKey();
 
+  // User data bloc
+  UserCubit _userCubit = UserCubit(ImpUserRepository());
+
   // On item bottom navigation tapped
   void _onItemTapped(int index, BuildContext context) {
     if (index == 2) {
@@ -42,6 +50,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _userCubit.loadDataUser();
+
     if (_selectedIndex == 0 || _selectedIndex == 4) {
       FlutterStatusbarcolor.setStatusBarColor(Color(0xFF40407A));
       SystemChrome.setSystemUIOverlayStyle(
@@ -52,16 +62,19 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       body: FocusDetector(
-          key: _resumeDetectorKey,
-          onFocusGained: () {
-            if (_selectedIndex == 0 || _selectedIndex == 4) {
-              FlutterStatusbarcolor.setStatusBarColor(Color(0xFF40407A));
-              SystemChrome.setSystemUIOverlayStyle(
-                SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
-              );
-            }
-          },
-          child: _screenOptions.elementAt(_selectedIndex)),
+        key: _resumeDetectorKey,
+        onFocusGained: () {
+          if (_selectedIndex == 0 || _selectedIndex == 4) {
+            FlutterStatusbarcolor.setStatusBarColor(Color(0xFF40407A));
+            SystemChrome.setSystemUIOverlayStyle(
+              SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+            );
+          }
+        },
+        child: BlocProvider<UserCubit>(
+            create: (context) => _userCubit,
+            child: _screenOptions.elementAt(_selectedIndex)),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: [

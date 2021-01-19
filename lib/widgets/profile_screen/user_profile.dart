@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/material.dart';
+
+import '../../data/models/user_model.dart';
 
 class UserProfile extends StatelessWidget {
+  final UserModel user;
+
+  UserProfile(this.user);
+
   // Navigate to profile menu list page
   void toProfileMenu(BuildContext context) {
     Navigator.pushNamed(context, '/profile_menu');
@@ -28,7 +34,7 @@ class UserProfile extends StatelessWidget {
                 Container(
                   constraints: BoxConstraints(maxWidth: 130),
                   child: Text(
-                    'John Doe',
+                    user.firstName + ' ' + user.lastName,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),

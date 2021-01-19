@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/mine_cubit.dart';
 import 'package:poster/cubit/subscription_cubit.dart';
+import 'package:poster/cubit/user_cubit.dart';
 
 import '../data/mine_repository.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/general/poster_card.dart';
 import '../widgets/profile_screen/list_loading.dart';
 import '../widgets/profile_screen/user_profile.dart';
-
-import 'package:flutter/services.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -22,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   ScrollController _scrollControllerMine = ScrollController();
   ScrollController _scrollControllerSub = ScrollController();
   MineCubit _mineCubit = MineCubit(FakeMineRepository());
+  UserCubit _userCubit;
   SubscriptionCubit _subscriptionCubit =
       SubscriptionCubit(FakeSubscriptionRepository());
   String userId = '311210045'; // Dummy user id
@@ -30,10 +31,11 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void initState() {
-    super.initState();
+    _userCubit = BlocProvider.of<UserCubit>(context);
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
     _scrollControllerMine.addListener(_getMoreDataMine);
     _scrollControllerSub.addListener(_getMoreDataSub);
+    super.initState();
   }
 
   _getMoreDataMine() {
@@ -66,6 +68,8 @@ class _ProfileScreenState extends State<ProfileScreen>
       SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
 
+    _userCubit.getDataLogin();
+
     return Scaffold(
         body: MultiBlocProvider(
       providers: [
@@ -74,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen>
         ),
         BlocProvider<SubscriptionCubit>(
           create: (context) => _subscriptionCubit,
-        )
+        ),
       ],
       child: SafeArea(
         child: Column(
@@ -92,7 +96,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                       ),
                     ),
                   ),
-                  UserProfile(),
+                  BlocBuilder<UserCubit, UserState>(
+                    builder: (context, state) {
+                      if (state is UserLoaded) {
+                        return UserProfile(state.user);
+                      }
+                      return Container();
+                    },
+                  )
                 ],
               ),
             ),
