@@ -6,7 +6,6 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:focus_detector/focus_detector.dart';
 
 import '../cubit/user_cubit.dart';
-import '../data/user_repository.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -19,7 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _resumeDetectorKey = UniqueKey();
   String _email = '';
   String _password = '';
-  final UserCubit _userCubit = UserCubit(ImpUserRepository());
+  UserCubit _userCubit;
+
+  @override
+  void initState() {
+    _userCubit = BlocProvider.of<UserCubit>(context);
+    super.initState();
+  }
 
   // Handle login navigation
   void _handleLogin(BuildContext context) {
@@ -44,63 +49,85 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         child: SafeArea(
           child: SingleChildScrollView(
-            child: BlocProvider<UserCubit>(
-              create: (context) => _userCubit,
-              child: BlocListener<UserCubit, UserState>(
-                listener: (context, state) {
-                  if (state is UserLoading) {
-                    return showDialog(
-                      context: context,
-                      builder: (context) => Container(
-                        alignment: Alignment.center,
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  } else if (state is UserError) {
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(state.message),
-                    ));
-                    Navigator.pop(context);
-                  } else if (state is UserLoaded) {
-                    Navigator.pushReplacementNamed(context, '/main');
-                  }
-                  return Container();
-                },
-                child: Container(
-                  height: 650,
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF40407A),
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(60),
+            child: BlocListener<UserCubit, UserState>(
+              listener: (context, state) {
+                if (state is UserLoading) {
+                  return showDialog(
+                    context: context,
+                    builder: (context) => Container(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(),
                     ),
+                  );
+                } else if (state is UserError) {
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(state.message),
+                  ));
+                  Navigator.pop(context);
+                } else if (state is UserLoaded) {
+                  Navigator.pushReplacementNamed(context, '/main');
+                }
+                return Container();
+              },
+              child: Container(
+                height: 650,
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 25),
+                decoration: BoxDecoration(
+                  color: Color(0xFF40407A),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(60),
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 80,
-                      ),
-                      Text(
-                        'Login',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            TextField(
-                              onChanged: (text) {
-                                _email = text;
-                              },
-                              style: TextStyle(color: Color(0xFF7171A6)),
-                              decoration: InputDecoration(
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 80,
+                    ),
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 36,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextField(
+                            onChanged: (text) {
+                              _email = text;
+                            },
+                            style: TextStyle(color: Color(0xFF7171A6)),
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white)),
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white)),
+                              prefixIcon: Icon(
+                                EvaIcons.emailOutline,
+                                color: Colors.white,
+                              ),
+                              labelText: 'Email',
+                              labelStyle: TextStyle(
+                                color: Color(0xFFABABD3),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          TextField(
+                            onChanged: (text) {
+                              _password = text;
+                            },
+                            obscureText: _isPasswordSecure,
+                            style: TextStyle(color: Color(0xFF7171A6)),
+                            decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.white)),
@@ -108,121 +135,94 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderSide:
                                         BorderSide(color: Colors.white)),
                                 prefixIcon: Icon(
-                                  EvaIcons.emailOutline,
+                                  EvaIcons.personOutline,
                                   color: Colors.white,
                                 ),
-                                labelText: 'Email',
-                                labelStyle: TextStyle(
-                                  color: Color(0xFFABABD3),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            TextField(
-                              onChanged: (text) {
-                                _password = text;
-                              },
-                              obscureText: _isPasswordSecure,
-                              style: TextStyle(color: Color(0xFF7171A6)),
-                              decoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white)),
-                                  focusedBorder: UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white)),
-                                  prefixIcon: Icon(
-                                    EvaIcons.personOutline,
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _isPasswordSecure
+                                        ? EvaIcons.eyeOff2Outline
+                                        : EvaIcons.eyeOutline,
                                     color: Colors.white,
                                   ),
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      _isPasswordSecure
-                                          ? EvaIcons.eyeOff2Outline
-                                          : EvaIcons.eyeOutline,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () {
-                                      this.setState(() {
-                                        _isPasswordSecure =
-                                            _isPasswordSecure ? false : true;
-                                      });
-                                    },
-                                  ),
-                                  labelText: 'Password',
-                                  labelStyle:
-                                      TextStyle(color: Color(0xFFABABD3))),
+                                  onPressed: () {
+                                    this.setState(() {
+                                      _isPasswordSecure =
+                                          _isPasswordSecure ? false : true;
+                                    });
+                                  },
+                                ),
+                                labelText: 'Password',
+                                labelStyle:
+                                    TextStyle(color: Color(0xFFABABD3))),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'Forgot Password',
+                              style: TextStyle(color: Color(0xFFD14081)),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'Forgot Password',
-                                style: TextStyle(color: Color(0xFFD14081)),
-                              ),
-                            ),
-                            SizedBox(
+                          ),
+                          SizedBox(
+                            height: 50,
+                          ),
+                          GestureDetector(
+                            onTap: () => _handleLogin(context),
+                            child: Container(
+                              width: double.infinity,
                               height: 50,
-                            ),
-                            GestureDetector(
-                              onTap: () => _handleLogin(context),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    color: Color(0xFFD14081),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                child: Center(
-                                  child: Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 40),
-                              child: Text(
-                                'Dont\' have account yet ?',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => _handleRegister(context),
-                              child: Container(
-                                width: double.infinity,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF7171A6),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'Sign Up',
-                                    style: TextStyle(
+                              decoration: BoxDecoration(
+                                  color: Color(0xFFD14081),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: Center(
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
+                                      fontSize: 18),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 40),
+                            child: Text(
+                              'Dont\' have account yet ?',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => _handleRegister(context),
+                            child: Container(
+                              width: double.infinity,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Color(0xFF7171A6),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),

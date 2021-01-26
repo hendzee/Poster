@@ -35,7 +35,13 @@ class _MainScreenState extends State<MainScreen> {
   final _resumeDetectorKey = UniqueKey();
 
   // User data bloc
-  UserCubit _userCubit = UserCubit(ImpUserRepository());
+  UserCubit _userCubit;
+
+  @override
+  void initState() {
+    _userCubit = BlocProvider.of<UserCubit>(context);
+    super.initState();
+  }
 
   // On item bottom navigation tapped
   void _onItemTapped(int index, BuildContext context) {

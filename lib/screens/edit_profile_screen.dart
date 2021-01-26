@@ -3,7 +3,9 @@ import 'dart:async';
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:poster/cubit/user_cubit.dart';
 
 import '../widgets/general/bottom_button.dart';
 
@@ -21,6 +23,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   File _profileImage; // Photo profile image
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker(); // Poster image picker function
+  UserCubit _userCubit;
+
+  @override
+  void initState() {
+    print('Kesini Broo');
+    _userCubit = BlocProvider.of<UserCubit>(context);
+
+    _userCubit.getDataLogin();
+    super.initState();
+  }
 
   // Handle image picker
   Future _handleImagePicker(ImagePickerType type) async {
@@ -81,6 +93,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
+
+    _userCubit.getDataLogin();
 
     return Scaffold(
       appBar: AppBar(
@@ -146,34 +160,67 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Name',
-                          prefixIcon: Icon(EvaIcons.personOutline),
+                child: BlocConsumer<UserCubit, UserState>(
+                  cubit: _userCubit,
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is UserLoaded) {
+                      return Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: TextEditingController()
+                                      ..text = state.user.firstName.toString(),
+                                    decoration: InputDecoration(
+                                      labelText: 'First Name',
+                                      prefixIcon: Icon(EvaIcons.personOutline),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 15),
+                                Expanded(
+                                  child: TextField(
+                                    controller: TextEditingController()
+                                      ..text = state.user.lastName.toString(),
+                                    decoration: InputDecoration(
+                                      labelText: 'Last Name',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TextField(
+                              controller: TextEditingController()
+                                ..text = state.user.phone != null
+                                    ? state.user.phone.toString()
+                                    : '',
+                              decoration: InputDecoration(
+                                labelText: 'Phone',
+                                prefixIcon: Icon(
+                                  EvaIcons.phoneOutline,
+                                ),
+                              ),
+                            ),
+                            TextField(
+                              controller: TextEditingController()
+                                ..text = state.user.email.toString(),
+                              decoration: InputDecoration(
+                                labelText: 'Email',
+                                prefixIcon: Icon(EvaIcons.emailOutline),
+                              ),
+                            )
+                          ],
                         ),
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'No.Phone',
-                          prefixIcon: Icon(
-                            EvaIcons.phoneOutline,
-                          ),
-                        ),
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          prefixIcon: Icon(EvaIcons.emailOutline),
-                        ),
-                      )
-                    ],
-                  ),
+                      );
+                    }
+                    return Container();
+                  },
                 ),
-              )
+              ),
             ],
           ),
         ),
