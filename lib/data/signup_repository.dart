@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'models/user_model.dart';
+import 'package:http/http.dart' as http;
+import '../modules/services.dart';
 
 abstract class SignupRepository {
   Future<UserModel> registerUser(
@@ -14,16 +18,24 @@ class ImpSignupRepository extends SignupRepository {
   Future<UserModel> registerUser(
       String firstName, String lastName, String email, String password) async {
     try {
-      // This is dummy data and should edit soon
-      return UserModel(
-        id: 'dfalsdfaj',
-        email: 'dfaldsf',
-        firstName: 'dfaldfa',
-        lastName: 'dfaldfja',
-        password: 'fdaldkfja',
-        phone: '084023242',
-      );
+      var response = await http.post(Services.signup(), body: {
+        'first_name': firstName,
+        'last_name': lastName,
+        'email': email,
+        'password': password
+      });
+
+      if (response.statusCode == 200) {
+        UserModel user =
+            UserModel.fromMap(jsonDecode(response.body)['data']['user']);
+
+        return user;
+      } else {
+        var err = jsonDecode(response.body);
+        throw (err['message']);
+      }
     } catch (e) {
+      print('ERROR NICH GAN: ' + e.toString());
       throw (e);
     }
   }

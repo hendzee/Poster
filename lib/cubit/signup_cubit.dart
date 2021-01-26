@@ -2,8 +2,11 @@ import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:poster/data/models/user_model.dart';
-import 'package:poster/data/signup_repository.dart';
+
+import '../data/models/user_model.dart';
+import '../data/signup_repository.dart';
+import '../data/models/user_model.dart';
+import '../modules/local_data.dart';
 
 part 'signup_state.dart';
 
@@ -41,7 +44,15 @@ class SignupCubit extends Cubit<SignupState> {
 
     try {
       UserModel userModel = await _signupRepository.registerUser(
-          _firstName, _lastName, _email, _password);
+        _firstName,
+        _lastName,
+        _email,
+        _password,
+      );
+
+      // Save user data to local storage
+      LocalData.setUserLocalData(userModel);
+      LocalData.setLoginLocalData(true);
 
       emit(SignupSucceded(user: userModel));
     } catch (e) {

@@ -5,4 +5,8 @@ class Services {
   static String login() {
     return _SERVICE_HOST + '/users/login';
   }
+
+  static String signup() {
+    return _SERVICE_HOST + '/users/signup';
+  }
 }

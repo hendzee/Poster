@@ -51,7 +51,7 @@ class UserProfile extends StatelessWidget {
                     radius: 15,
                     backgroundColor: Color(0xFFD14081),
                     child: Icon(
-                      EvaIcons.edit2Outline,
+                      EvaIcons.settingsOutline,
                       size: 15,
                       color: Colors.white,
                     ),
