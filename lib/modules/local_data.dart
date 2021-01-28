@@ -9,6 +9,8 @@ class LocalData {
     prefs.setString('id', user.id);
     prefs.setString('firstName', user.firstName);
     prefs.setString('lastName', user.lastName);
+    prefs.setString('photo', user.photo);
+    prefs.setString('country', user.country);
     prefs.setString('email', user.email);
     prefs.setString('phone', user.phone);
     prefs.setString('password', user.password);
@@ -22,6 +24,8 @@ class LocalData {
       id: prefs.getString('id'),
       firstName: prefs.getString('firstName'),
       lastName: prefs.getString('lastName'),
+      country: prefs.getString('country'),
+      photo: prefs.getString('photo'),
       email: prefs.getString('email'),
       phone: prefs.getString('phone'),
       password: prefs.getString('password'),

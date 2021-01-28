@@ -24,18 +24,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker(); // Poster image picker function
   UserCubit _userCubit;
+  bool _isUploadingPhoto = false;
 
   @override
   void initState() {
-    print('Kesini Broo');
     _userCubit = BlocProvider.of<UserCubit>(context);
 
-    _userCubit.getDataLogin();
     super.initState();
   }
 
   // Handle image picker
-  Future _handleImagePicker(ImagePickerType type) async {
+  Future _handleImagePicker(ImagePickerType type, String userId) async {
     PickedFile pickedFile;
 
     if (type == ImagePickerType.camera) {
@@ -45,14 +44,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
 
     if (pickedFile != null) {
+      _userCubit.updatePhoto(userId, pickedFile.path.toString());
+
       setState(() {
+        _isUploadingPhoto = true;
         _profileImage = File(pickedFile.path);
       });
     }
   }
 
   // Asked to image picker
-  Future _askedToImaegPicker(BuildContext context) async {
+  Future _askedToImaegPicker(BuildContext context, String userId) async {
     switch (await showDialog<ImagePickerType>(
         context: context,
         builder: (BuildContext context) {
@@ -81,10 +83,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           );
         })) {
       case ImagePickerType.camera:
-        _handleImagePicker(ImagePickerType.camera);
+        _handleImagePicker(ImagePickerType.camera, userId);
         break;
       case ImagePickerType.file:
-        _handleImagePicker(ImagePickerType.file);
+        _handleImagePicker(ImagePickerType.file, userId);
         break;
       default:
     }
@@ -93,8 +95,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-
-    _userCubit.getDataLogin();
 
     return Scaffold(
       appBar: AppBar(
@@ -112,60 +112,81 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       bottomSheet: BottomButton(
         title: 'SAVE',
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () => _askedToImaegPicker(context),
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 40),
-                    child: Stack(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage:
-                              AssetImage('assets/dummy_images/user1.png'),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: InkResponse(
-                            onTap: null,
-                            child: Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFBDC3C7),
-                                shape: BoxShape.circle,
+      body: BlocConsumer<UserCubit, UserState>(
+        cubit: _userCubit,
+        listener: (context, state) {
+          if (state is UserError) {
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text('Something went wrong')));
+          } else if (state is UserLoaded) {
+            _isUploadingPhoto = false;
+          }
+        },
+        builder: (context, state) {
+          if (state is UserLoaded) {
+            print('My photo is ' + state.user.photo);
+            return SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 25),
+                    GestureDetector(
+                      onTap: () => _askedToImaegPicker(context, state.user.id),
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 0),
+                          child: Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 40,
+                                backgroundImage: state.user.photo != null
+                                    ? NetworkImage(state.user.photo)
+                                    : AssetImage(
+                                        'assets/dummy_images/user1.png'),
                               ),
-                              child: IconButton(
-                                icon: Icon(
-                                  EvaIcons.cameraOutline,
-                                  color: Colors.black,
-                                  size: 15,
+                              Container(
+                                width: 80,
+                                height: 80,
+                                child: Center(
+                                  child: _isUploadingPhoto
+                                      ? CircularProgressIndicator()
+                                      : Container(),
                                 ),
-                                onPressed: null,
                               ),
-                            ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: InkResponse(
+                                  onTap: null,
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFBDC3C7),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        EvaIcons.cameraOutline,
+                                        color: Colors.black,
+                                        size: 15,
+                                      ),
+                                      onPressed: null,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: BlocConsumer<UserCubit, UserState>(
-                  cubit: _userCubit,
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    if (state is UserLoaded) {
-                      return Form(
+                    SizedBox(height: 25),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: Form(
                         key: _formKey,
                         child: Column(
                           children: [
@@ -215,15 +236,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             )
                           ],
                         ),
-                      );
-                    }
-                    return Container();
-                  },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            );
+          }
+          return Container();
+        },
       ),
     );
   }

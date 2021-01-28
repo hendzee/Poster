@@ -44,3 +44,7 @@ class UserError extends UserState {
   @override
   int get hashCode => message.hashCode;
 }
+
+class UserUploadingPhoto extends UserState {
+  const UserUploadingPhoto();
+}

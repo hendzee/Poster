@@ -60,4 +60,20 @@ class UserCubit extends Cubit<UserState> {
       emit(UserError(message: e));
     }
   }
+
+  Future<void> updatePhoto(String userId, String fileName) async {
+    await Future.delayed(Duration(seconds: 2));
+
+    try {
+      _user = await _userRepository.updatePhoto(userId, fileName);
+
+      // Save user data to local storage
+      LocalData.setUserLocalData(_user);
+
+      emit(UserLoaded(user: _user, isLogin: _isLogin));
+    } catch (e) {
+      print('ERROR IS ' + e.toString());
+      emit(UserError(message: 'Error'));
+    }
+  }
 }
