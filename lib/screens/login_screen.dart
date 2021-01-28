@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: BlocListener<UserCubit, UserState>(
               listener: (context, state) {
                 if (state is UserLoading) {
-                  return showDialog(
+                  showDialog(
                     context: context,
                     builder: (context) => Container(
                       alignment: Alignment.center,
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onChanged: (text) {
                               _email = text;
                             },
-                            style: TextStyle(color: Color(0xFF7171A6)),
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white)),
@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               _password = text;
                             },
                             obscureText: _isPasswordSecure,
-                            style: TextStyle(color: Color(0xFF7171A6)),
+                            style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide:

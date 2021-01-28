@@ -68,8 +68,6 @@ class _ProfileScreenState extends State<ProfileScreen>
       SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
 
-    _userCubit.getDataLogin();
-
     return Scaffold(
         body: MultiBlocProvider(
       providers: [
@@ -98,6 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                   BlocBuilder<UserCubit, UserState>(
                     builder: (context, state) {
+                      print('The state is ' + state.toString());
                       if (state is UserLoaded) {
                         return UserProfile(state.user);
                       }

@@ -1,21 +1,14 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:focus_detector/focus_detector.dart';
-import 'package:poster/cubit/user_cubit.dart';
-import 'package:poster/data/user_repository.dart';
-
-import '../modules/local_data.dart';
 
 import 'add_item_screen.dart';
 import 'explore_screen.dart';
 import 'home_screen.dart';
 import 'notification_screen.dart';
 import 'profile_screen.dart';
-
-import 'package:flutter/services.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -34,12 +27,8 @@ class _MainScreenState extends State<MainScreen> {
 
   final _resumeDetectorKey = UniqueKey();
 
-  // User data bloc
-  UserCubit _userCubit;
-
   @override
   void initState() {
-    _userCubit = BlocProvider.of<UserCubit>(context);
     super.initState();
   }
 
@@ -56,8 +45,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _userCubit.loadDataUser();
-
     if (_selectedIndex == 0 || _selectedIndex == 4) {
       FlutterStatusbarcolor.setStatusBarColor(Color(0xFF40407A));
       SystemChrome.setSystemUIOverlayStyle(
@@ -77,9 +64,7 @@ class _MainScreenState extends State<MainScreen> {
             );
           }
         },
-        child: BlocProvider<UserCubit>(
-            create: (context) => _userCubit,
-            child: _screenOptions.elementAt(_selectedIndex)),
+        child: _screenOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
