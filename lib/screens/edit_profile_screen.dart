@@ -124,7 +124,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         },
         builder: (context, state) {
           if (state is UserLoaded) {
-            print('My photo is ' + state.user.photo);
             return SingleChildScrollView(
               child: Container(
                 width: double.infinity,

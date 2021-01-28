@@ -96,7 +96,6 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                   BlocBuilder<UserCubit, UserState>(
                     builder: (context, state) {
-                      print('The state is ' + state.toString());
                       if (state is UserLoaded) {
                         return UserProfile(state.user);
                       }

@@ -35,7 +35,6 @@ class ImpSignupRepository extends SignupRepository {
         throw (err['message']);
       }
     } catch (e) {
-      print('ERROR NICH GAN: ' + e.toString());
       throw (e);
     }
   }
