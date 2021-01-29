@@ -1,15 +1,15 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:poster/cubit/user_cubit.dart';
-
-import '../widgets/general/bottom_button.dart';
-
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
+
+import '../cubit/user_cubit.dart';
+import '../widgets/general/bottom_button.dart';
 
 // Enum for camera and gallery
 enum ImagePickerType { camera, file }
@@ -36,20 +36,43 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // Handle image picker
   Future _handleImagePicker(ImagePickerType type, String userId) async {
     PickedFile pickedFile;
+    final double MAX_WIDTH = 1080;
+    final double MAX_HEIGHT = 1080;
 
     if (type == ImagePickerType.camera) {
-      pickedFile = await _picker.getImage(source: ImageSource.camera);
+      pickedFile = await _picker.getImage(
+        maxHeight: MAX_HEIGHT,
+        maxWidth: MAX_WIDTH,
+        source: ImageSource.camera,
+      );
     } else {
-      pickedFile = await _picker.getImage(source: ImageSource.gallery);
+      pickedFile = await _picker.getImage(
+        maxHeight: MAX_HEIGHT,
+        maxWidth: MAX_WIDTH,
+        source: ImageSource.gallery,
+      );
     }
 
     if (pickedFile != null) {
-      _userCubit.updatePhoto(userId, pickedFile.path.toString());
+      // Crop image
+      File croppedImage = await ImageCropper.cropImage(
+        sourcePath: pickedFile.path,
+        maxWidth: MAX_WIDTH.round(), // parse double to int with round()
+        maxHeight: MAX_HEIGHT.round(), // parse double to int with round()
+        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        androidUiSettings: AndroidUiSettings(
+          hideBottomControls: true,
+        ),
+      );
 
-      setState(() {
-        _isUploadingPhoto = true;
-        _profileImage = File(pickedFile.path);
-      });
+      if (croppedImage != null) {
+        _userCubit.updatePhoto(userId, croppedImage.path.toString());
+
+        setState(() {
+          _isUploadingPhoto = true;
+          _profileImage = File(croppedImage.path);
+        });
+      }
     }
   }
 
@@ -118,7 +141,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           if (state is UserError) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text('Something went wrong')));
-          } else if (state is UserLoaded) {
+          } else if (state is UserLoaded && _isUploadingPhoto) {
             _isUploadingPhoto = false;
           }
         },
@@ -142,8 +165,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 radius: 40,
                                 backgroundImage: state.user.photo != null
                                     ? NetworkImage(state.user.photo)
-                                    : AssetImage(
-                                        'assets/dummy_images/user1.png'),
+                                    : AssetImage('assets/images/profile.png'),
                               ),
                               Container(
                                 width: 80,
