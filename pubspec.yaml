@@ -45,6 +45,8 @@ dependencies:
   http: ^0.12.2
   # Lib for save data to local storage
   shared_preferences: ^0.5.12+4
+  # Image / photo cropper
+  image_cropper: ^1.3.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
     - assets/images/person.png
     - assets/images/trumpet.png
     - assets/images/mosque.png
+    - assets/images/profile.png
     - assets/dummy_images/poster1.png
     - assets/dummy_images/poster2.png
     - assets/dummy_images/poster3.png
