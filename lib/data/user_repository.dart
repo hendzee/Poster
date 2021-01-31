@@ -23,7 +23,9 @@ class ImpUserRepository extends UserRepository {
             UserModel.fromMap(jsonDecode(response.body)['data']['user']);
         return user;
       } else {
-        var err = jsonDecode(response.body);
+        var err = jsonDecode(response.body) != null
+            ? jsonDecode(response.body)
+            : Services.generealErrorMsg();
         throw (err['message']);
       }
     } catch (e) {
@@ -47,7 +49,9 @@ class ImpUserRepository extends UserRepository {
 
         return user;
       } else {
-        var err = jsonDecode(response.body);
+        var err = jsonDecode(response.body) != null
+            ? jsonDecode(response.body)
+            : Services.generealErrorMsg();
         throw (err['message']);
       }
     } catch (e) {

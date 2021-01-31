@@ -13,4 +13,9 @@ class Services {
   static String signup() {
     return _SERVICE_HOST + '/users/signup';
   }
+
+  // Genereal error message
+  static String generealErrorMsg() {
+    return 'Something went wrong, please try again';
+  }
 }
