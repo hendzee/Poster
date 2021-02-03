@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../cubit/user_cubit.dart';
 import '../widgets/general/bottom_button.dart';
@@ -210,6 +211,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       child: Form(
                         key: _formKey,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
@@ -234,6 +236,54 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                 ),
                               ],
+                            ),
+                            CountryCodePicker(
+                              initialSelection: '+62',
+                              showCountryOnly: true,
+                              boxDecoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              dialogSize: Size(
+                                MediaQuery.of(context).size.width - 10,
+                                MediaQuery.of(context).size.height - 80,
+                              ),
+                              closeIcon: Icon(
+                                EvaIcons.closeOutline,
+                                size: 36,
+                              ),
+                              builder: (data) {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 12,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.flag_outlined,
+                                          color: Colors.grey[500]),
+                                      SizedBox(width: 13),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Country',
+                                              style: TextStyle(fontSize: 11)),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            data.name,
+                                            style: TextStyle(fontSize: 17),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                            Divider(
+                              height: 2,
+                              color: Colors.grey[700],
                             ),
                             TextField(
                               controller: TextEditingController()

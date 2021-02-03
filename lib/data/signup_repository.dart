@@ -31,7 +31,9 @@ class ImpSignupRepository extends SignupRepository {
 
         return user;
       } else {
-        var err = jsonDecode(response.body);
+        var err = jsonDecode(response.body) != null
+            ? jsonDecode(response.body)
+            : Services.generealErrorMsg();
         throw (err['message']);
       }
     } catch (e) {

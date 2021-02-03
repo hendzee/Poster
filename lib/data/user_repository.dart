@@ -8,6 +8,12 @@ import '../modules/services.dart';
 abstract class UserRepository {
   Future<UserModel> login(String email, String password);
   Future<UserModel> updatePhoto(String userId, String fileName);
+  Future<UserModel> updateProfile(
+      {String userId,
+      String firstName,
+      String lastName,
+      String phone,
+      String email});
 }
 
 /// Implement with real data
@@ -57,5 +63,15 @@ class ImpUserRepository extends UserRepository {
     } catch (e) {
       throw (e);
     }
+  }
+
+  @override
+  Future<UserModel> updateProfile(
+      {String userId,
+      String firstName,
+      String lastName,
+      String phone,
+      String email}) {
+    throw UnimplementedError();
   }
 }
