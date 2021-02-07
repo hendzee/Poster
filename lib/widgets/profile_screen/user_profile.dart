@@ -22,8 +22,11 @@ class UserProfile extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-                radius: 35,
-                backgroundImage: AssetImage('assets/dummy_images/user1.png')),
+              radius: 35,
+              backgroundImage: user.photo != null
+                  ? NetworkImage(user.photo)
+                  : AssetImage('assets/dummy_images/profile.png'),
+            ),
             SizedBox(
               width: 10,
             ),
