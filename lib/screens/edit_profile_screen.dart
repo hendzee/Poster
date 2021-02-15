@@ -26,10 +26,26 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _picker = ImagePicker(); // Poster image picker function
   UserCubit _userCubit;
   bool _isUploadingPhoto = false;
+  String _userId;
+  String _firstName;
+  String _lastName;
+  String _country;
+  String _phone;
+  String _email;
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
 
   @override
   void initState() {
     _userCubit = BlocProvider.of<UserCubit>(context);
+    _userId = _userCubit.user.id;
+    _country = _userCubit.user.country == null ? 'ID' : _userCubit.user.country;
+    _firstNameController.text = _userCubit.user.firstName;
+    _lastNameController.text = _userCubit.user.lastName;
+    _phoneController.text = _userCubit.user.phone;
+    _emailController.text = _userCubit.user.email;
 
     super.initState();
   }
@@ -116,6 +132,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
+  // Updata profile
+  void _updateProfile() {
+    _userCubit.updateProfile(
+      _userId,
+      _firstName,
+      _lastName,
+      _country,
+      _phone,
+      _email,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
@@ -135,15 +163,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       bottomSheet: BottomButton(
         title: 'SAVE',
+        onTap: () {
+          if (_formKey.currentState.validate()) {
+            _updateProfile();
+          }
+        },
       ),
       body: BlocConsumer<UserCubit, UserState>(
         cubit: _userCubit,
         listener: (context, state) {
-          if (state is UserError) {
+          if (state is UserLoading) {
+            showDialog(
+              context: context,
+              builder: (context) => Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state is UserError) {
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text('Something went wrong')));
           } else if (state is UserLoaded && _isUploadingPhoto) {
             _isUploadingPhoto = false;
+          } else if (state is UserLoaded) {
+            Navigator.pop(context);
           }
         },
         builder: (context, state) {
@@ -216,9 +259,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: TextField(
-                                    controller: TextEditingController()
-                                      ..text = state.user.firstName.toString(),
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'First name must be filled';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _firstName = value;
+                                      });
+                                    },
+                                    controller: _firstNameController,
                                     decoration: InputDecoration(
                                       labelText: 'First Name',
                                       prefixIcon: Icon(EvaIcons.personOutline),
@@ -227,9 +280,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                                 SizedBox(width: 15),
                                 Expanded(
-                                  child: TextField(
-                                    controller: TextEditingController()
-                                      ..text = state.user.lastName.toString(),
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Last name must be filled';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _lastName = value;
+                                      });
+                                    },
+                                    controller: _lastNameController,
                                     decoration: InputDecoration(
                                       labelText: 'Last Name',
                                     ),
@@ -238,12 +301,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ],
                             ),
                             CountryCodePicker(
-                              initialSelection: '+62',
+                              initialSelection: _country,
                               showCountryOnly: true,
                               boxDecoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),
                               ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _country = value.code.toString();
+                                });
+                              },
                               dialogSize: Size(
                                 MediaQuery.of(context).size.width - 10,
                                 MediaQuery.of(context).size.height - 80,
@@ -285,11 +353,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               height: 2,
                               color: Colors.grey[700],
                             ),
-                            TextField(
-                              controller: TextEditingController()
-                                ..text = state.user.phone != null
-                                    ? state.user.phone.toString()
-                                    : '',
+                            TextFormField(
+                              controller: _phoneController,
+                              onChanged: (value) {
+                                setState(() {
+                                  _phone = value;
+                                });
+                              },
                               decoration: InputDecoration(
                                 labelText: 'Phone',
                                 prefixIcon: Icon(
@@ -297,9 +367,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                               ),
                             ),
-                            TextField(
-                              controller: TextEditingController()
-                                ..text = state.user.email.toString(),
+                            TextFormField(
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Email must be filled';
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  _email = value;
+                                });
+                              },
+                              controller: _emailController,
                               decoration: InputDecoration(
                                 labelText: 'Email',
                                 prefixIcon: Icon(EvaIcons.emailOutline),
