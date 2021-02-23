@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String country = 'Indonesia'; // Just example until database was built
+  String country = 'ID'; // Just example until database was built
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<TrendingCubit>(
-          create: (context) => TrendingCubit(FakeTrendingRepository()),
+          create: (context) => TrendingCubit(ImpTrendingRepository()),
         ),
         BlocProvider<RecomendedCubit>(
-          create: (context) => RecomendedCubit(FakeRecomendedRepository()),
+          create: (context) => RecomendedCubit(ImpRecomendedRepository()),
         ),
         BlocProvider<ComingsoonCubit>(
-          create: (context) => ComingsoonCubit(FakeComingSoonRepository()),
+          create: (context) => ComingsoonCubit(ImpComingSoonRepository()),
         )
       ],
       child: SafeArea(

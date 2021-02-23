@@ -18,4 +18,19 @@ class Services {
   static String generealErrorMsg() {
     return 'Something went wrong, please try again';
   }
+
+  // Get trending poster
+  static String getTrendingPoster() {
+    return _SERVICE_HOST + '/posters/trending';
+  }
+
+  // Recomended poster list
+  static String getRecomendedPoster() {
+    return _SERVICE_HOST + '/posters/recommendation';
+  }
+
+  // static String Comming soon list
+  static String getCommingSoonPoster() {
+    return _SERVICE_HOST + '/posters/recommendation';
+  }
 }

@@ -16,8 +16,8 @@ class TrendingCubit extends Cubit<TrendingState> {
       emit(const TrendingLoading());
       final trending = await _trendingRepository.fetchTrending(country);
       emit(TrendingLoaded(posterCardModel: trending));
-    } catch (_) {
-      emit(const TrendingError(message: 'Failed to get data trending'));
+    } catch (e) {
+      emit(const TrendingError(message: 'Failed to get data'));
     }
   }
 }
