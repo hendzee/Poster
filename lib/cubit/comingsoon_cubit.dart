@@ -7,7 +7,7 @@ import '../data/models/poster_card_model.dart';
 part 'comingsoon_state.dart';
 
 class ComingsoonCubit extends Cubit<ComingsoonState> {
-  final FakeComingSoonRepository _fakeComingSoonRepository;
+  final ComingSoonRepository _fakeComingSoonRepository;
 
   ComingsoonCubit(this._fakeComingSoonRepository) : super(ComingsoonInitial());
 
