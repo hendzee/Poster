@@ -12,6 +12,15 @@ class PosterCard extends StatelessWidget {
     Navigator.pushNamed(context, '/detail_item');
   }
 
+  // Set event's start and end date
+  String _setDate(String startDate, String endDate) {
+    if (startDate == endDate) {
+      return '$startDate to $endDate';
+    }
+
+    return startDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -74,7 +83,10 @@ class PosterCard extends StatelessWidget {
                                           width: 5.0,
                                         ),
                                         Text(
-                                          this.posterCardModel.date,
+                                          _setDate(
+                                            this.posterCardModel.startDate,
+                                            this.posterCardModel.endDate,
+                                          ),
                                           style: TextStyle(fontSize: 12.0),
                                         )
                                       ],
@@ -105,27 +117,30 @@ class PosterCard extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 0, bottom: 5.0),
-                                      child: RichText(
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 3,
-                                          text: TextSpan(
-                                              text: 'Desc: ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  fontSize: 12.0),
-                                              children: [
-                                                TextSpan(
-                                                    text: this
-                                                        .posterCardModel
-                                                        .description,
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ))
-                                              ]))),
+                                    padding:
+                                        EdgeInsets.only(top: 0, bottom: 5.0),
+                                    child: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 3,
+                                      text: TextSpan(
+                                        text: 'Desc: ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: 12.0),
+                                        children: [
+                                          TextSpan(
+                                            text: this
+                                                .posterCardModel
+                                                .description,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -145,7 +160,7 @@ class PosterCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image(
-                  image: AssetImage(this.posterCardModel.posterImage),
+                  image: NetworkImage(this.posterCardModel.posterImage),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -156,7 +171,7 @@ class PosterCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/dummy_images/user1.png'),
+                  backgroundImage: NetworkImage(this.posterCardModel.userPhoto),
                 ),
               ),
             )
