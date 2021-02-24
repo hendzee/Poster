@@ -42,19 +42,9 @@ class ImpRecomendedRepository implements RecomendedRepository {
 
         var tempDataList = (jsonDecode(response.body)['data']);
 
-        print(tempDataList[0]['photo']);
-
         for (int i = 0; i < tempDataList.length; i++) {
           recomendedList.add(
-            PosterCardModel(
-              title: tempDataList[i]['title'],
-              description: tempDataList[i]['description'],
-              startDate: tempDataList[i]['start_date'],
-              endDate: tempDataList[i]['end_date'],
-              location: tempDataList[i]['location'],
-              posterImage: tempDataList[i]['image'],
-              userPhoto: tempDataList[i]['photo'],
-            ),
+            PosterCardModel.fromMap(tempDataList[i]),
           );
         }
 
