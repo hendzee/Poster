@@ -95,7 +95,6 @@ class UserCubit extends Cubit<UserState> {
 
       emit(UserLoaded(user: user, isLogin: isLogin));
     } catch (e) {
-      print(e.toString());
       emit(UserError(message: 'SHIT'));
     }
   }
