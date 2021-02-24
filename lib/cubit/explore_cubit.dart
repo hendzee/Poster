@@ -12,26 +12,39 @@ class ExploreCubit extends Cubit<ExploreState> {
 
   ExploreCubit(this._exploreRepository) : super(ExploreInitial());
 
+  int currentPage = 0;
+  int lastPage = 0;
+
   // Get initial data explore list for first time
   Future<void> getExploreList(String country) async {
     try {
-      emit(ExploreLoading());
-      exploreList = await _exploreRepository.fetchData(country);
-      emit(ExploreLoaded(exploreList: exploreList));
-    } catch (_) {
-      emit(ExploreError(message: 'Failed to get data explorer'));
-    }
-  }
+      if (exploreList == null || exploreList.length < 1) {
+        emit(ExploreLoading());
 
-  // Get more more data explore list
-  Future<void> getMoreExploreList(String country) async {
-    try {
-      List<PosterCardModel> moreExploreList =
-          await _exploreRepository.fetchData(country);
-      exploreList = exploreList + moreExploreList;
+        currentPage += 1;
+
+        Map<String, dynamic> data =
+            await _exploreRepository.fetchData(country, currentPage.toString());
+
+        exploreList = data['data'];
+        currentPage = int.parse(data['currentPage']);
+        lastPage = int.parse(data['lastPage']);
+      } else {
+        currentPage += 1;
+
+        Map<String, dynamic> data =
+            await _exploreRepository.fetchData(country, currentPage.toString());
+
+        exploreList = exploreList + data['data'];
+        currentPage = int.parse(data['currentPage']);
+        lastPage = int.parse(data['lastPage']);
+      }
+
       emit(ExploreLoaded(exploreList: exploreList));
-    } catch (_) {
-      emit(ExploreError(message: 'Failed to get data expolorer'));
+    } catch (e) {
+      emit(
+        ExploreError(message: e),
+      );
     }
   }
 }

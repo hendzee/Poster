@@ -15,9 +15,8 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   ScrollController _scrollController = ScrollController();
-  ExploreCubit _exploreCubit = ExploreCubit(FakeExploreRepository());
-  final String country = 'Indonesia';
-  int _counter = 0; // Its dummy counter for infinite list
+  ExploreCubit _exploreCubit = ExploreCubit(ImpExploreRepository());
+  final String country = 'ID';
 
   @override
   void initState() {
@@ -29,30 +28,28 @@ class _ExploreScreenState extends State<ExploreScreen> {
     double maxScroll = _scrollController.position.maxScrollExtent;
     double currentScroll = _scrollController.position.pixels;
 
-    if (currentScroll == maxScroll && _counter < 5) {
-      _exploreCubit.getMoreExploreList(country);
-
-      this.setState(() {
-        _counter += 1;
-      });
+    if (currentScroll == maxScroll &&
+        (_exploreCubit.currentPage < _exploreCubit.lastPage)) {
+      _exploreCubit.getExploreList(country);
     }
   }
 
   // Set categories tab
   Widget _setCategoriesTab(String title, bool isActive) {
     return (Container(
-        decoration: BoxDecoration(
-          color: Color(isActive ? 0xFF40407A : 0xFFABABD3),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
+      decoration: BoxDecoration(
+        color: Color(isActive ? 0xFF40407A : 0xFFABABD3),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        child: Text(
-          title,
-          style: TextStyle(color: Colors.white),
-        )));
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: Text(
+        title,
+        style: TextStyle(color: Colors.white),
+      ),
+    ));
   }
 
   @override
@@ -128,9 +125,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     } else if (state is ExploreLoaded) {
                       return ListView.builder(
                         controller: _scrollController,
-                        itemCount: _counter < 4
-                            ? state.exploreList.length + 1
-                            : state.exploreList.length,
+                        itemCount: _exploreCubit.exploreList.length + 1,
                         itemBuilder: (context, index) {
                           if (index < state.exploreList.length) {
                             return Padding(

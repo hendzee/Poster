@@ -6,6 +6,10 @@ class Services {
     return _SERVICE_HOST + '/users';
   }
 
+  static String posters() {
+    return _SERVICE_HOST + '/posters';
+  }
+
   static String login() {
     return _SERVICE_HOST + '/users/login';
   }
@@ -29,7 +33,7 @@ class Services {
     return _SERVICE_HOST + '/posters/recommendation';
   }
 
-  // static String Comming soon list
+  // Comming soon list
   static String getCommingSoonPoster() {
     return _SERVICE_HOST + '/posters/recommendation';
   }
