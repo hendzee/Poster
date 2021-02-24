@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:poster/data/models/poster_card_model.dart';
 
 import '../data/models/item_model.dart';
 import '../widgets/general/bottom_button.dart';
@@ -12,22 +13,11 @@ class DetailItemScreen extends StatefulWidget {
 }
 
 class _DetailItemScreenState extends State<DetailItemScreen> {
-  // Dummy data
-  final ItemModel _dataItem = ItemModel(
-      posterImage: 'assets/dummy_images/poster-large1.png',
-      title: 'Music Zombie Party',
-      date: '20 Sep, 2020',
-      location: 'Matos, Malang',
-      ticketPrice: 'Free',
-      twitter: 'mzp_2020',
-      instagram: 'mzp_2020',
-      facebook: 'mzp_2020',
-      description:
-          'Ipsum is simply dummy  of the printing and industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,  when an unknown printer.');
+  PosterCardModel _dataDetail;
 
   // Navigate to poster image detail
-  _toPosterImage(BuildContext context) {
-    Navigator.pushNamed(context, '/detail_poster_image');
+  _toPosterImage(BuildContext context, String image) {
+    Navigator.pushNamed(context, '/detail_poster_image', arguments: image);
   }
 
   // Set info
@@ -48,6 +38,7 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
 
   @override
   Widget build(BuildContext context) {
+    PosterCardModel _dataDetail = ModalRoute.of(context).settings.arguments;
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
 
     return Scaffold(
@@ -90,7 +81,7 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
                         height: 350,
                         child: Image(
                           fit: BoxFit.cover,
-                          image: AssetImage(this._dataItem.posterImage),
+                          image: NetworkImage(_dataDetail.posterImage),
                         ),
                       ),
                     ),
@@ -99,7 +90,8 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
                     left: 100,
                     top: 70,
                     child: GestureDetector(
-                      onTap: () => _toPosterImage(context),
+                      onTap: () =>
+                          _toPosterImage(context, _dataDetail.posterImage),
                       child: CircleAvatar(
                           radius: 15,
                           backgroundColor: Colors.white,
@@ -116,27 +108,28 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         width: 195,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              this._dataItem.title,
+                              _dataDetail.title,
                               style: TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 10,
                             ),
-                            this._setInfo(Icon(EvaIcons.calendarOutline),
-                                this._dataItem.date),
-                            this._setInfo(Icon(EvaIcons.pinOutline),
-                                this._dataItem.location),
-                            this._setInfo(Icon(EvaIcons.creditCardOutline),
-                                this._dataItem.ticketPrice),
-                            this._setInfo(Icon(EvaIcons.twitterOutline),
-                                this._dataItem.twitter),
-                            this._setInfo(Icon(EvaIcons.cameraOutline),
-                                this._dataItem.instagram),
-                            this._setInfo(Icon(EvaIcons.facebookOutline),
-                                this._dataItem.facebook),
+                            _setInfo(Icon(EvaIcons.calendarOutline),
+                                _dataDetail.startDate),
+                            _setInfo(Icon(EvaIcons.pinOutline),
+                                _dataDetail.location),
+                            _setInfo(Icon(EvaIcons.creditCardOutline),
+                                _dataDetail.price),
+                            _setInfo(Icon(EvaIcons.twitterOutline),
+                                _dataDetail.twitter),
+                            _setInfo(Icon(EvaIcons.cameraOutline),
+                                _dataDetail.instagram),
+                            _setInfo(Icon(EvaIcons.facebookOutline),
+                                _dataDetail.facebook),
                           ],
                         ),
                       ))
@@ -152,7 +145,7 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25),
-              child: Text(this._dataItem.description),
+              child: Text(_dataDetail.description),
             ),
             SizedBox(
               height: 90,

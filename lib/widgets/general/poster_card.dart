@@ -9,7 +9,7 @@ class PosterCard extends StatelessWidget {
 
   // Navigate to detail item
   void _toDetailItem(BuildContext context) {
-    Navigator.pushNamed(context, '/detail_item');
+    Navigator.pushNamed(context, '/detail_item', arguments: posterCardModel);
   }
 
   // Set event's start and end date

@@ -13,11 +13,13 @@ class _DetailImagePosterScreenState extends State<DetailImagePosterScreen> {
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
 
+    String _image = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
-            EvaIcons.arrowBackOutline,
+            EvaIcons.closeOutline,
           ),
           onPressed: () => Navigator.pop(context, false),
         ),
@@ -32,7 +34,7 @@ class _DetailImagePosterScreenState extends State<DetailImagePosterScreen> {
           boundaryMargin: EdgeInsets.all(30),
           maxScale: 3.0,
           child: Image(
-            image: AssetImage('assets/dummy_images/poster2.png'),
+            image: NetworkImage(_image),
           ),
         ),
       ),
