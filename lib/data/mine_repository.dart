@@ -16,8 +16,6 @@ class ImpMineRepository implements MineRepository {
       var response =
           await http.get(Services.getUserPoster() + '?id=$userId&page=$page');
 
-      print(response.body);
-
       if (response.statusCode == 200) {
         List<PosterCardModel> userPosterList = [];
 

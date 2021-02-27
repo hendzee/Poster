@@ -24,10 +24,8 @@ class _ProfileScreenState extends State<ProfileScreen>
   MineCubit _mineCubit = MineCubit(ImpMineRepository());
   UserCubit _userCubit;
   SubscriptionCubit _subscriptionCubit =
-      SubscriptionCubit(FakeSubscriptionRepository());
+      SubscriptionCubit(ImpSubscriptionRepository());
   String userId = '1'; // Dummy user id
-  int counterMine = 0; // counterMine to limit infinite load
-  int counterSub = 0; // counter subsription list
 
   @override
   void initState() {
@@ -52,11 +50,9 @@ class _ProfileScreenState extends State<ProfileScreen>
     double maxPositionSub = _scrollControllerSub.position.maxScrollExtent;
     double currentPositionSub = _scrollControllerSub.position.pixels;
 
-    if (currentPositionSub == maxPositionSub && counterSub < 3) {
-      _subscriptionCubit.getMoreSubscriptionList(userId);
-      this.setState(() {
-        counterSub += 1;
-      });
+    if (currentPositionSub == maxPositionSub &&
+        (_subscriptionCubit.currentPage < _subscriptionCubit.lastPage)) {
+      _subscriptionCubit.getSubscriptionList(userId);
     }
   }
 
@@ -149,25 +145,31 @@ class _ProfileScreenState extends State<ProfileScreen>
                             controller: _scrollControllerMine,
                             itemCount: _mineCubit.mineList.length + 1,
                             itemBuilder: (context, index) {
-                              return index < state.mineList.length
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 25,
-                                        right: 25,
-                                        bottom: 25,
-                                      ),
-                                      child: PosterCard(
-                                        posterCardModel: state.mineList[index],
-                                      ),
-                                    )
-                                  : Container(
-                                      width: 30,
-                                      height: 30,
-                                      margin: EdgeInsets.all(10),
-                                      child: Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    );
+                              if (index < state.mineList.length) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 25,
+                                    right: 25,
+                                    bottom: 25,
+                                  ),
+                                  child: PosterCard(
+                                    posterCardModel: state.mineList[index],
+                                  ),
+                                );
+                              } else {
+                                if (_mineCubit.currentPage <
+                                    _mineCubit.lastPage) {
+                                  return Container(
+                                    width: 30,
+                                    height: 30,
+                                    margin: EdgeInsets.all(10),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+                              }
+                              return Container();
                             },
                           );
                         } else {
@@ -197,30 +199,36 @@ class _ProfileScreenState extends State<ProfileScreen>
                         } else if (state is SubscriptionLoaded) {
                           return ListView.builder(
                             controller: _scrollControllerSub,
-                            itemCount: counterSub < 3
-                                ? state.subscriptionList.length + 1
-                                : state.subscriptionList.length,
+                            itemCount:
+                                _subscriptionCubit.subscriptionList.length + 1,
                             itemBuilder: (context, index) {
-                              return index < state.subscriptionList.length
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 25,
-                                        right: 25,
-                                        bottom: 25,
-                                      ),
-                                      child: PosterCard(
-                                        posterCardModel:
-                                            state.subscriptionList[index],
-                                      ),
-                                    )
-                                  : Container(
-                                      width: 30,
-                                      height: 30,
-                                      margin: EdgeInsets.all(10),
-                                      child: Center(
-                                        child: CircularProgressIndicator(),
-                                      ),
-                                    );
+                              if (index <
+                                  _subscriptionCubit.subscriptionList.length) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 25,
+                                    right: 25,
+                                    bottom: 25,
+                                  ),
+                                  child: PosterCard(
+                                    posterCardModel:
+                                        state.subscriptionList[index],
+                                  ),
+                                );
+                              } else {
+                                if (_subscriptionCubit.currentPage <
+                                    _subscriptionCubit.lastPage) {
+                                  return Container(
+                                    width: 30,
+                                    height: 30,
+                                    margin: EdgeInsets.all(10),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+                              }
+                              return Container();
                             },
                           );
                         } else {

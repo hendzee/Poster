@@ -42,4 +42,9 @@ class Services {
   static String getUserPoster() {
     return _SERVICE_HOST + '/users/posters';
   }
+
+  // Get user's subscriber
+  static String getUserSubscription() {
+    return _SERVICE_HOST + '/users/subscriptions';
+  }
 }
