@@ -9,7 +9,7 @@ abstract class NotificationRepository {
 class FakeNotificationRepository implements NotificationRepository {
   @override
   Future<List<NotificationCardModel>> fetchNotificationList(String userId) {
-    return Future.delayed(Duration(seconds: 2), () {
+    return Future.delayed(Duration(seconds: 1), () {
       return FakeNotificationData.getNotificationList();
     });
   }

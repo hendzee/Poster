@@ -33,6 +33,8 @@ class _ProfileScreenState extends State<ProfileScreen>
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
     _scrollControllerMine.addListener(_getMoreDataMine);
     _scrollControllerSub.addListener(_getMoreDataSub);
+    _mineCubit.getMineList(userId);
+    _subscriptionCubit.getSubscriptionList(userId);
     super.initState();
   }
 
@@ -135,10 +137,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         }
                       },
                       builder: (context, state) {
-                        if (state is MineInitial) {
-                          _mineCubit.getMineList(userId);
-                          return ListLoading();
-                        } else if (state is MineLoading) {
+                        if (state is MineLoading) {
                           return ListLoading();
                         } else if (state is MineLoaded) {
                           return ListView.builder(
@@ -191,10 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         }
                       },
                       builder: (context, state) {
-                        if (state is SubscriptionInitial) {
-                          _subscriptionCubit.getSubscriptionList(userId);
-                          return ListLoading();
-                        } else if (state is SubscriptionLoading) {
+                        if (state is SubscriptionLoading) {
                           return ListLoading();
                         } else if (state is SubscriptionLoaded) {
                           return ListView.builder(
