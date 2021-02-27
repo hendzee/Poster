@@ -37,4 +37,9 @@ class Services {
   static String getCommingSoonPoster() {
     return _SERVICE_HOST + '/posters/recommendation';
   }
+
+  // Get user's poster
+  static String getUserPoster() {
+    return _SERVICE_HOST + '/users/posters';
+  }
 }

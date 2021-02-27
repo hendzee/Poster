@@ -145,9 +145,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           );
                         },
                       );
-                    } else {
-                      return null;
                     }
+                    return Container();
                   },
                 ),
               ),

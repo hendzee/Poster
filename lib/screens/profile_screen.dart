@@ -21,11 +21,11 @@ class _ProfileScreenState extends State<ProfileScreen>
   TabController _tabController;
   ScrollController _scrollControllerMine = ScrollController();
   ScrollController _scrollControllerSub = ScrollController();
-  MineCubit _mineCubit = MineCubit(FakeMineRepository());
+  MineCubit _mineCubit = MineCubit(ImpMineRepository());
   UserCubit _userCubit;
   SubscriptionCubit _subscriptionCubit =
       SubscriptionCubit(FakeSubscriptionRepository());
-  String userId = '311210045'; // Dummy user id
+  String userId = '1'; // Dummy user id
   int counterMine = 0; // counterMine to limit infinite load
   int counterSub = 0; // counter subsription list
 
@@ -42,11 +42,9 @@ class _ProfileScreenState extends State<ProfileScreen>
     double maxPositionMine = _scrollControllerMine.position.maxScrollExtent;
     double currentPositionMine = _scrollControllerMine.position.pixels;
 
-    if (currentPositionMine == maxPositionMine && counterMine < 3) {
-      _mineCubit.getMoreMineList(userId);
-      this.setState(() {
-        counterMine += 1;
-      });
+    if (currentPositionMine == maxPositionMine &&
+        (_mineCubit.currentPage < _mineCubit.lastPage)) {
+      _mineCubit.getMineList(userId);
     }
   }
 
@@ -149,9 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                         } else if (state is MineLoaded) {
                           return ListView.builder(
                             controller: _scrollControllerMine,
-                            itemCount: counterMine < 3
-                                ? state.mineList.length + 1
-                                : state.mineList.length,
+                            itemCount: _mineCubit.mineList.length + 1,
                             itemBuilder: (context, index) {
                               return index < state.mineList.length
                                   ? Padding(
