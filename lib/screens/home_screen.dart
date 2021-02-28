@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/comingsoon_cubit.dart';
 import 'package:poster/cubit/recomended_cubit.dart';
+import 'package:poster/cubit/search_cubit.dart';
 import 'package:poster/data/comingsoon_repository.dart';
 import 'package:poster/data/recomended_repository.dart';
+import 'package:poster/data/search_repository.dart';
 
 import '../cubit/trending_cubit.dart';
 import '../data/trending_repository.dart';
@@ -39,48 +41,53 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         BlocProvider<ComingsoonCubit>(
           create: (context) => ComingsoonCubit(ImpComingSoonRepository()),
+        ),
+        BlocProvider<SearchCubit>(
+          create: (context) => SearchCubit(ImpSearchRepository()),
         )
       ],
       child: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TopContent(),
-            TrendingTitleContent(),
-            BlocConsumer<TrendingCubit, TrendingState>(
-              listener: (context, state) {
-                if (state is TrendingError) {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message)),
-                  );
-                }
-              },
-              builder: (context, state) {
-                if (state is TrendingInitial) {
-                  BlocProvider.of<TrendingCubit>(context).getTrending(country);
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TopContent(),
+              TrendingTitleContent(),
+              BlocConsumer<TrendingCubit, TrendingState>(
+                listener: (context, state) {
+                  if (state is TrendingError) {
+                    Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text(state.message)),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is TrendingInitial) {
+                    BlocProvider.of<TrendingCubit>(context)
+                        .getTrending(country);
 
-                  return TrendingContentLoading();
-                } else if (state is TrendingLoading) {
-                  return TrendingContentLoading();
-                } else if (state is TrendingLoaded) {
-                  return TrendingContent(
-                    posterCardModel: state.posterCardModel,
-                  );
-                } else {
-                  return TrendingContentLoading();
-                }
-              },
-            ),
-            RecomendedList(
-              country: this.country,
-            ),
-            ComingSoonList(
-              country: this.country,
-            )
-          ],
+                    return TrendingContentLoading();
+                  } else if (state is TrendingLoading) {
+                    return TrendingContentLoading();
+                  } else if (state is TrendingLoaded) {
+                    return TrendingContent(
+                      posterCardModel: state.posterCardModel,
+                    );
+                  } else {
+                    return TrendingContentLoading();
+                  }
+                },
+              ),
+              RecomendedList(
+                country: this.country,
+              ),
+              ComingSoonList(
+                country: this.country,
+              )
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poster/cubit/search_cubit.dart';
+import 'package:poster/data/search_repository.dart';
 import 'package:poster/widgets/explore_screen/explore_list_loading.dart';
 import 'package:poster/widgets/general/search_bar.dart';
 
@@ -16,6 +18,8 @@ class ExploreScreen extends StatefulWidget {
 class _ExploreScreenState extends State<ExploreScreen> {
   ScrollController _scrollController = ScrollController();
   ExploreCubit _exploreCubit = ExploreCubit(ImpExploreRepository());
+  SearchCubit _searchCubit = SearchCubit(ImpSearchRepository());
+
   final String country = 'ID';
 
   @override
@@ -63,10 +67,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
           Padding(
             padding: const EdgeInsets.only(right: 25),
             child: GestureDetector(
-                onTap: () {
-                  showSearch(context: context, delegate: SearchBar());
-                },
-                child: Icon(EvaIcons.searchOutline)),
+              onTap: () {
+                showSearch(context: context, delegate: SearchBar(_searchCubit));
+              },
+              child: Icon(EvaIcons.searchOutline),
+            ),
           )
         ],
       ),

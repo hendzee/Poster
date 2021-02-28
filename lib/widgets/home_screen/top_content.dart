@@ -1,11 +1,12 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poster/cubit/search_cubit.dart';
+import 'package:poster/data/search_repository.dart';
 
 import '../general/search_bar.dart';
 
 class TopContent extends StatelessWidget {
-  final dataDummy = ['Hendras', 'Virginia', 'Prawira'];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +33,12 @@ class TopContent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  showSearch(context: context, delegate: SearchBar());
+                  showSearch(
+                    context: context,
+                    delegate: SearchBar(
+                      BlocProvider.of<SearchCubit>(context),
+                    ),
+                  );
                 },
                 child: CircleAvatar(
                   radius: 18,
@@ -45,7 +51,7 @@ class TopContent extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
           Padding(

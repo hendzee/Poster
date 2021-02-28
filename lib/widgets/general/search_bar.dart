@@ -1,19 +1,15 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poster/cubit/search_cubit.dart';
 
 import '../searchbar_explore/searchbar_result.dart';
 
 class SearchBar extends SearchDelegate<String> {
-  // List Dummy Data
-  final listData = [
-    'Malang Tempoe Doeloe 2020',
-    'Pengajian Akbar, Every Friday',
-    'Car Free Day',
-    'Concert 2020',
-    'Indonesian Flower Festival',
-    'Food Festival'
-  ];
+  SearchCubit searchCubit;
+
+  SearchBar(this.searchCubit);
 
   // Recent Dummy Data
   final recents = [
@@ -22,48 +18,43 @@ class SearchBar extends SearchDelegate<String> {
   ];
 
   @override
-  ThemeData appBarTheme(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return theme.copyWith(
-      textTheme: TextTheme(headline6: TextStyle(color: Colors.black)),
-      inputDecorationTheme: InputDecorationTheme(
-        hintStyle: TextStyle(
-          color: Colors.grey,
-        ),
-      ),
-    );
-  }
-
-  @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? recents
-        : listData
-            .where((element) => (element
-                .toUpperCase()
-                .trim()
-                .startsWith((query.toUpperCase().trim()))))
-            .toList();
+    if (query.isNotEmpty) {
+      searchCubit.fetchSugestionList(query);
+    }
 
-    return ListView.builder(
-        itemCount: suggestionList.length,
-        itemBuilder: (context, index) => ListTile(
-              onTap: () {
-                showResults(context);
-              },
-              leading: Icon(EvaIcons.clockOutline),
-              title: RichText(
-                text: TextSpan(
-                    text: suggestionList[index].substring(0, query.length),
+    return BlocProvider<SearchCubit>(
+      create: (context) => searchCubit,
+      child: BlocBuilder<SearchCubit, SearchState>(
+        builder: (context, state) {
+          if (state is SearchLoaded) {
+            return ListView.builder(
+              itemCount: state.sugestions.length,
+              itemBuilder: (context, index) => ListTile(
+                onTap: () {
+                  showResults(context);
+                  query = state.sugestions[index];
+                },
+                leading: Icon(EvaIcons.clockOutline),
+                title: RichText(
+                  text: TextSpan(
+                    text: state.sugestions[index].substring(0, query.length),
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black),
                     children: [
                       TextSpan(
-                          text: suggestionList[index].substring(query.length),
+                          text: state.sugestions[index].substring(query.length),
                           style: TextStyle(color: Colors.grey))
-                    ]),
+                    ],
+                  ),
+                ),
               ),
-            ));
+            );
+          }
+          return Container();
+        },
+      ),
+    );
   }
 
   @override
@@ -90,6 +81,7 @@ class SearchBar extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
+    print(query);
     return SearchbarResult();
   }
 }

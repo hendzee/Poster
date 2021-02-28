@@ -47,4 +47,9 @@ class Services {
   static String getUserSubscription() {
     return _SERVICE_HOST + '/users/subscriptions';
   }
+
+  // Get sugestion search
+  static String getSugestionSearch() {
+    return _SERVICE_HOST + '/posters/search';
+  }
 }
