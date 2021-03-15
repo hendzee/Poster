@@ -1,6 +1,6 @@
 class Services {
   static final String _SERVICE_HOST =
-      'http://192.168.1.14/poster_service/public'; // Host address
+      'http://192.168.1.5/poster_service/public'; // Host address
 
   static String users() {
     return _SERVICE_HOST + '/users';
@@ -51,5 +51,10 @@ class Services {
   // Get sugestion search
   static String getSugestionSearch() {
     return _SERVICE_HOST + '/posters/search';
+  }
+
+  // Get search result
+  static String getSearchResult() {
+    return _SERVICE_HOST + '/posters/search_result';
   }
 }

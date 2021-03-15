@@ -3,58 +3,63 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/search_cubit.dart';
+import 'package:poster/cubit/search_result_cubit.dart';
+import 'package:poster/cubit/user_cubit.dart';
+import 'package:poster/data/search_result_repository.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 
 import '../searchbar_explore/searchbar_result.dart';
 
 class SearchBar extends SearchDelegate<String> {
   SearchCubit searchCubit;
-
+  SearchResultCubit searchResultCubit;
+  String country;
   SearchBar(this.searchCubit);
-
-  // Recent Dummy Data
-  final recents = [
-    'Concert 2020',
-    'Indonesian Flower Festival',
-  ];
 
   @override
   Widget buildSuggestions(BuildContext context) {
     if (query.isNotEmpty) {
-      searchCubit.fetchSugestionList(query);
+      EasyDebounce.debounce('search-suggestion', Duration(microseconds: 500),
+          () {
+        searchCubit.fetchSugestionList(query);
+      });
     }
 
-    return BlocProvider<SearchCubit>(
-      create: (context) => searchCubit,
-      child: BlocBuilder<SearchCubit, SearchState>(
+    return Builder(builder: (context) {
+      return BlocBuilder<SearchCubit, SearchState>(
+        cubit: searchCubit,
         builder: (context, state) {
-          if (state is SearchLoaded) {
+          if (state is SearchLoading) {
+            return Container(
+              height: MediaQuery.of(context).size.height * 20 / 100,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state is SearchLoaded &&
+              query.isNotEmpty &&
+              searchCubit.sugestions.length > 0) {
             return ListView.builder(
               itemCount: state.sugestions.length,
               itemBuilder: (context, index) => ListTile(
                 onTap: () {
-                  showResults(context);
                   query = state.sugestions[index];
+
+                  showResults(context);
                 },
                 leading: Icon(EvaIcons.clockOutline),
-                title: RichText(
-                  text: TextSpan(
-                    text: state.sugestions[index].substring(0, query.length),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
-                    children: [
-                      TextSpan(
-                          text: state.sugestions[index].substring(query.length),
-                          style: TextStyle(color: Colors.grey))
-                    ],
-                  ),
+                title: Text(
+                  state.sugestions[index],
+                  style: TextStyle(color: Colors.grey),
                 ),
               ),
             );
           }
+
           return Container();
         },
-      ),
-    );
+      );
+    });
   }
 
   @override
@@ -81,7 +86,16 @@ class SearchBar extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    print(query);
-    return SearchbarResult();
+    country = BlocProvider.of<UserCubit>(context).user.country;
+
+    searchResultCubit = SearchResultCubit(ImpSearchResultRepository());
+
+    searchResultCubit.fetchSearchResult(query, country);
+
+    return SearchbarResult(
+      searchResultCubit: searchResultCubit,
+      country: country,
+      query: query,
+    );
   }
 }

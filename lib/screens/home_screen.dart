@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poster/cubit/comingsoon_cubit.dart';
 import 'package:poster/cubit/recomended_cubit.dart';
 import 'package:poster/cubit/search_cubit.dart';
+import 'package:poster/cubit/user_cubit.dart';
 import 'package:poster/data/comingsoon_repository.dart';
 import 'package:poster/data/recomended_repository.dart';
 import 'package:poster/data/search_repository.dart';
@@ -23,7 +24,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String country = 'ID'; // Just example until database was built
+  String country; // Just example until database was built
+  TrendingCubit _trendingCubit;
+
+  @override
+  void initState() {
+    country = BlocProvider.of<UserCubit>(context).user.country;
+    _trendingCubit = TrendingCubit(ImpTrendingRepository())
+      ..getTrending(country);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<TrendingCubit>(
-          create: (context) => TrendingCubit(ImpTrendingRepository()),
-        ),
+        BlocProvider<TrendingCubit>(create: (context) => _trendingCubit),
         BlocProvider<RecomendedCubit>(
           create: (context) => RecomendedCubit(ImpRecomendedRepository()),
         ),
@@ -62,12 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 },
                 builder: (context, state) {
-                  if (state is TrendingInitial) {
-                    BlocProvider.of<TrendingCubit>(context)
-                        .getTrending(country);
-
-                    return TrendingContentLoading();
-                  } else if (state is TrendingLoading) {
+                  if (state is TrendingLoading) {
                     return TrendingContentLoading();
                   } else if (state is TrendingLoaded) {
                     return TrendingContent(

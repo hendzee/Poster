@@ -9,12 +9,14 @@ class SearchCubit extends Cubit<SearchState> {
 
   SearchCubit(this._searchRepository) : super(SearchInitial());
 
-  List<String> sugestions;
+  List<String> sugestions = [];
 
   Future<void> fetchSugestionList(String keyword) async {
-    emit(SearchLoading());
+    sugestions = [];
 
     try {
+      emit(SearchLoading());
+
       sugestions = await _searchRepository.fetchSugestionList(keyword);
 
       emit(SearchLoaded(sugestions: sugestions));
