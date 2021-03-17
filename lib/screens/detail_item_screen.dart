@@ -26,7 +26,7 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
         DateFormater.standardDate(DateTime.parse(startDate));
     String endDateFormat = DateFormater.standardDate(DateTime.parse(endDate));
 
-    if (startDate == endDate) {
+    if (startDate != endDate) {
       return '$startDateFormat to $endDateFormat';
     }
 
@@ -44,7 +44,10 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
           SizedBox(
             width: 10,
           ),
-          Flexible(child: Text(info))
+          Flexible(
+              child: Text(
+            info,
+          ))
         ],
       ),
     );
