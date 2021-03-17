@@ -45,7 +45,7 @@ class AddPosterCubit extends Cubit<AddPosterState> {
       );
       emit(AddPosterLoaded(message: status));
     } catch (e) {
-      emit(AddPosterError(message: 'error nich'));
+      emit(AddPosterError(message: e));
     }
   }
 }
