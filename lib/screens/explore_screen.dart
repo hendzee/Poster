@@ -1,14 +1,15 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poster/cubit/search_cubit.dart';
-import 'package:poster/data/search_repository.dart';
-import 'package:poster/widgets/explore_screen/explore_list_loading.dart';
-import 'package:poster/widgets/general/search_bar.dart';
 
 import '../cubit/explore_cubit.dart';
+import '../cubit/search_cubit.dart';
+import '../cubit/user_cubit.dart';
 import '../data/explore_repository.dart';
+import '../data/search_repository.dart';
+import '../widgets/explore_screen/explore_list_loading.dart';
 import '../widgets/general/poster_card.dart';
+import '../widgets/general/search_bar.dart';
 
 class ExploreScreen extends StatefulWidget {
   @override
@@ -19,12 +20,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
   ScrollController _scrollController = ScrollController();
   ExploreCubit _exploreCubit = ExploreCubit(ImpExploreRepository());
   SearchCubit _searchCubit = SearchCubit(ImpSearchRepository());
+  int _selectedCategory = 0;
 
-  final String country = 'ID';
+  String country = '';
 
   @override
   void initState() {
+    country = BlocProvider.of<UserCubit>(context).user.country;
     _scrollController.addListener(_getMoreData);
+
     super.initState();
   }
 
@@ -83,7 +87,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
             children: <Widget>[
               Container(
                 height: 30,
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: EdgeInsets.only(top: 25, bottom: 10),
                 child: ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -91,15 +95,39 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     SizedBox(
                       width: 25,
                     ),
-                    _setCategoriesTab('Around World', true),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = 0;
+                        });
+                      },
+                      child: _setCategoriesTab(
+                          'Around World', _selectedCategory == 0),
+                    ),
                     SizedBox(
                       width: 25,
                     ),
-                    _setCategoriesTab('Another Trend', false),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = 1;
+                        });
+                      },
+                      child: _setCategoriesTab(
+                          'Another Trend', _selectedCategory == 1),
+                    ),
                     SizedBox(
                       width: 25,
                     ),
-                    _setCategoriesTab('Recomended', false),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = 2;
+                        });
+                      },
+                      child: _setCategoriesTab(
+                          'Recomended', _selectedCategory == 2),
+                    ),
                     SizedBox(
                       width: 25,
                     ),
@@ -134,8 +162,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         itemBuilder: (context, index) {
                           if (index < state.exploreList.length) {
                             return Padding(
-                              padding: const EdgeInsets.only(
-                                  right: 25, left: 25, bottom: 25),
+                              padding: index == 0
+                                  ? const EdgeInsets.all(25)
+                                  : const EdgeInsets.only(
+                                      right: 25,
+                                      left: 25,
+                                      bottom: 25,
+                                    ),
                               child: PosterCard(
                                 posterCardModel: state.exploreList[index],
                               ),

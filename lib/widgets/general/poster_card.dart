@@ -29,7 +29,7 @@ class PosterCard extends StatelessWidget {
       },
       child: Container(
         width: 310,
-        height: 220,
+        height: 190,
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -65,10 +65,14 @@ class PosterCard extends StatelessWidget {
                                   Padding(
                                     padding:
                                         const EdgeInsets.only(bottom: 10.0),
-                                    child: Text(
-                                      this.posterCardModel.title,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
+                                    child: Flexible(
+                                      child: Text(
+                                        this.posterCardModel.title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                   Padding(

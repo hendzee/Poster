@@ -1,11 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:poster/data/models/poster_card_model.dart';
 
-import '../data/models/item_model.dart';
-import '../widgets/general/bottom_button.dart';
+import '../modules/date_formater.dart';
 
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+import '../widgets/general/bottom_button.dart';
 
 class DetailItemScreen extends StatefulWidget {
   @override
@@ -20,17 +20,31 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
     Navigator.pushNamed(context, '/detail_poster_image', arguments: image);
   }
 
+  // Set event's start and end date
+  String _setDate(String startDate, String endDate) {
+    String startDateFormat =
+        DateFormater.standardDate(DateTime.parse(startDate));
+    String endDateFormat = DateFormater.standardDate(DateTime.parse(endDate));
+
+    if (startDate == endDate) {
+      return '$startDateFormat to $endDateFormat';
+    }
+
+    return startDateFormat;
+  }
+
   // Set info
   Widget _setInfo(Icon icon, String info) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           icon,
           SizedBox(
             width: 10,
           ),
-          Text(info)
+          Flexible(child: Text(info))
         ],
       ),
     );
@@ -118,8 +132,11 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
                             SizedBox(
                               height: 10,
                             ),
-                            _setInfo(Icon(EvaIcons.calendarOutline),
-                                _dataDetail.startDate),
+                            _setInfo(
+                              Icon(EvaIcons.calendarOutline),
+                              _setDate(
+                                  _dataDetail.startDate, _dataDetail.endDate),
+                            ),
                             _setInfo(Icon(EvaIcons.pinOutline),
                                 _dataDetail.location),
                             _setInfo(Icon(EvaIcons.creditCardOutline),

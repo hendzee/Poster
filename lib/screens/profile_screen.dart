@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poster/cubit/mine_cubit.dart';
-import 'package:poster/cubit/subscription_cubit.dart';
-import 'package:poster/cubit/user_cubit.dart';
 
+import '../cubit/mine_cubit.dart';
+import '../cubit/subscription_cubit.dart';
+import '../cubit/user_cubit.dart';
 import '../data/mine_repository.dart';
 import '../data/subscription_repository.dart';
 import '../widgets/general/poster_card.dart';
@@ -25,10 +25,11 @@ class _ProfileScreenState extends State<ProfileScreen>
   UserCubit _userCubit;
   SubscriptionCubit _subscriptionCubit =
       SubscriptionCubit(ImpSubscriptionRepository());
-  String userId = '1'; // Dummy user id
+  String userId = ''; // Dummy user id
 
   @override
   void initState() {
+    userId = BlocProvider.of<UserCubit>(context).user.id; // Dummy user id
     _userCubit = BlocProvider.of<UserCubit>(context);
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
     _scrollControllerMine.addListener(_getMoreDataMine);
@@ -105,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: TabBar(
                 controller: _tabController,
-                unselectedLabelColor: Color(0xFFABABD3),
+                unselectedLabelColor: Colors.grey,
                 unselectedLabelStyle: TextStyle(color: Color(0xFFE3E8E9)),
                 indicatorColor: Color(0xFF40407A),
                 labelColor: Color(0xFF40407A),
@@ -124,58 +125,57 @@ class _ProfileScreenState extends State<ProfileScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 25),
-                    child: BlocConsumer<MineCubit, MineState>(
-                      listener: (context, state) {
-                        if (state is MineError) {
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(state.message),
-                            ),
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is MineLoading) {
-                          return ListLoading();
-                        } else if (state is MineLoaded) {
-                          return ListView.builder(
-                            controller: _scrollControllerMine,
-                            itemCount: _mineCubit.mineList.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index < state.mineList.length) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 25,
-                                    right: 25,
-                                    bottom: 25,
-                                  ),
-                                  child: PosterCard(
-                                    posterCardModel: state.mineList[index],
+                  BlocConsumer<MineCubit, MineState>(
+                    listener: (context, state) {
+                      if (state is MineError) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is MineLoading) {
+                        return ListLoading();
+                      } else if (state is MineLoaded) {
+                        return ListView.builder(
+                          controller: _scrollControllerMine,
+                          itemCount: _mineCubit.mineList.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index < state.mineList.length) {
+                              return Padding(
+                                padding: index == 0
+                                    ? const EdgeInsets.all(25)
+                                    : const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                        bottom: 25,
+                                      ),
+                                child: PosterCard(
+                                  posterCardModel: state.mineList[index],
+                                ),
+                              );
+                            } else {
+                              if (_mineCubit.currentPage <
+                                  _mineCubit.lastPage) {
+                                return Container(
+                                  width: 30,
+                                  height: 30,
+                                  margin: EdgeInsets.all(10),
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
                                   ),
                                 );
-                              } else {
-                                if (_mineCubit.currentPage <
-                                    _mineCubit.lastPage) {
-                                  return Container(
-                                    width: 30,
-                                    height: 30,
-                                    margin: EdgeInsets.all(10),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }
                               }
-                              return Container();
-                            },
-                          );
-                        } else {
-                          return ListLoading();
-                        }
-                      },
-                    ),
+                            }
+                            return Container();
+                          },
+                        );
+                      } else {
+                        return ListLoading();
+                      }
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 25),
@@ -201,11 +201,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                               if (index <
                                   _subscriptionCubit.subscriptionList.length) {
                                 return Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 25,
-                                    right: 25,
-                                    bottom: 25,
-                                  ),
+                                  padding: index == 0
+                                      ? const EdgeInsets.all(25)
+                                      : const EdgeInsets.only(
+                                          left: 25,
+                                          right: 25,
+                                          bottom: 25,
+                                        ),
                                   child: PosterCard(
                                     posterCardModel:
                                         state.subscriptionList[index],
