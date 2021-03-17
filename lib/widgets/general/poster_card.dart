@@ -40,7 +40,7 @@ class PosterCard extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      height: 190,
+                      height: 170,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -82,12 +82,16 @@ class PosterCard extends StatelessWidget {
                                         SizedBox(
                                           width: 5.0,
                                         ),
-                                        Text(
-                                          _setDate(
-                                            this.posterCardModel.startDate,
-                                            this.posterCardModel.endDate,
+                                        Flexible(
+                                          child: Text(
+                                            _setDate(
+                                              this.posterCardModel.startDate,
+                                              this.posterCardModel.endDate,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(fontSize: 12.0),
                                           ),
-                                          style: TextStyle(fontSize: 12.0),
                                         )
                                       ],
                                     ),
@@ -109,7 +113,7 @@ class PosterCard extends StatelessWidget {
                                           child: Text(
                                             this.posterCardModel.location,
                                             overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
+                                            maxLines: 1,
                                             style: TextStyle(fontSize: 12.0),
                                           ),
                                         )
@@ -153,10 +157,10 @@ class PosterCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 15,
-              left: 15,
-              width: 135,
-              height: 200,
+              bottom: 20,
+              left: 20,
+              width: 120,
+              height: 170,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image(
