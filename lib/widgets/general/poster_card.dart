@@ -62,10 +62,10 @@ class PosterCard extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
-                                    child: Flexible(
+                                  Flexible(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10.0),
                                       child: Text(
                                         this.posterCardModel.title,
                                         maxLines: 1,

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poster/cubit/comingsoon_cubit.dart';
-import 'package:poster/cubit/recomended_cubit.dart';
-import 'package:poster/cubit/search_cubit.dart';
-import 'package:poster/cubit/user_cubit.dart';
-import 'package:poster/data/comingsoon_repository.dart';
-import 'package:poster/data/recomended_repository.dart';
-import 'package:poster/data/search_repository.dart';
 
+import '../cubit/comingsoon_cubit.dart';
+import '../cubit/recomended_cubit.dart';
+import '../cubit/search_cubit.dart';
 import '../cubit/trending_cubit.dart';
+import '../cubit/user_cubit.dart';
+import '../data/comingsoon_repository.dart';
+import '../data/recomended_repository.dart';
+import '../data/search_repository.dart';
 import '../data/trending_repository.dart';
 import '../widgets/home_screen/coming_soon_list.dart'; // Substance of home screen
 import '../widgets/home_screen/recomended_list.dart'; // Substance of home screen
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocConsumer<TrendingCubit, TrendingState>(
                 listener: (context, state) {
                   if (state is TrendingError) {
-                    Scaffold.of(context).showSnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.message)),
                     );
                   }
