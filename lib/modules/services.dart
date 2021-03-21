@@ -10,6 +10,10 @@ class Services {
     return _SERVICE_HOST + '/posters';
   }
 
+  static String subscribers() {
+    return _SERVICE_HOST + '/subscribers';
+  }
+
   static String login() {
     return _SERVICE_HOST + '/users/login';
   }

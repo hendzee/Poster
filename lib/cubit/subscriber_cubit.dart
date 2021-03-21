@@ -10,12 +10,26 @@ class SubscriberCubit extends Cubit<SubscriberState> {
 
   SubscriberCubit(this.subscriberRepository) : super(SubscriberInitial());
 
+  // Check subscribe status
   Future<void> checkSubscriberStatus(String userId, String posterId) async {
     try {
       emit(SubscriberLoading());
 
       bool status =
           await subscriberRepository.checkSubscriberStatus(userId, posterId);
+
+      emit(SubscriberLoaded(isSubscribed: status));
+    } catch (e) {
+      emit(SubscriberError(message: e));
+    }
+  }
+
+  // Subscriber / unsubscribe
+  Future<void> subscribe(String userId, String posterId) async {
+    try {
+      emit(SubscriberLoading());
+
+      bool status = await subscriberRepository.subscribe(userId, posterId);
 
       emit(SubscriberLoaded(isSubscribed: status));
     } catch (e) {

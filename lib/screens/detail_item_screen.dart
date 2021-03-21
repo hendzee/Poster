@@ -18,12 +18,13 @@ class DetailItemScreen extends StatefulWidget {
 class _DetailItemScreenState extends State<DetailItemScreen> {
   PosterCardModel _dataDetail;
   SubscriberCubit _subscriberCubit;
-  String userId;
+  String _userId;
+  String _posterId;
 
   @override
   void initState() {
     FlutterStatusbarcolor.setStatusBarColor(Colors.white);
-    userId = BlocProvider.of<UserCubit>(context).user.id;
+    _userId = BlocProvider.of<UserCubit>(context).user.id;
     _subscriberCubit = SubscriberCubit(ImpSubscriberRepository());
 
     super.initState();
@@ -33,9 +34,9 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
         _dataDetail = ModalRoute.of(context).settings.arguments;
       });
 
-      String posterId = _dataDetail.id;
+      _posterId = _dataDetail.id;
 
-      _subscriberCubit.checkSubscriberStatus(userId, posterId);
+      _subscriberCubit.checkSubscriberStatus(_userId, _posterId);
     });
   }
 
@@ -100,14 +101,19 @@ class _DetailItemScreenState extends State<DetailItemScreen> {
                   if (!state.isSubscribed) {
                     return BottomButton(
                       title: 'SUBSCRIBE',
+                      onTap: () {
+                        _subscriberCubit.subscribe(_userId, _posterId);
+                      },
                     );
                   }
                   return BottomButton(
                     title: 'UNSUBSCRIBE',
                     color: Colors.grey,
+                    onTap: () {
+                      _subscriberCubit.subscribe(_userId, _posterId);
+                    },
                   );
                 }
-
                 return BottomButton(
                   title: 'Loading...',
                   color: Colors.grey,
