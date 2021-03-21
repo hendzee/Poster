@@ -57,4 +57,9 @@ class Services {
   static String getSearchResult() {
     return _SERVICE_HOST + '/posters/search_result';
   }
+
+  // Check subscribe status
+  static String checkSubscribeStatus() {
+    return _SERVICE_HOST + '/subscribers/exist';
+  }
 }
